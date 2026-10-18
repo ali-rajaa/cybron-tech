@@ -1,0 +1,12 @@
+# The page's sections in order: the header links and the footer read this,
+# and site.js highlights the one being read. One page (owner, 18 Oct).
+- id: "services"
+  label: "Services"
+- id: "approach"
+  label: "How we work"
+- id: "about"
+  label: "About"
+- id: "careers"
+  label: "Careers"
+- id: "contact"
+  label: "Contact"

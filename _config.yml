@@ -1,0 +1,45 @@
+title: Cybron Technologies
+description: Cybron Technologies is a software company in Rawalpindi, Pakistan, building mobile apps, games, AI and cloud solutions and web software.
+
+# ---------------------------------------------------------------------------
+# Site address. Two states (STATUS.md section 6):
+#
+#   Preview (now)    url: "https://cybron.fixmypcperth.com"  staging: true
+#   Live (later)     url: "https://cybrontech.com"           staging: false
+#
+# The preview borrows a subdomain of fixmypcperth.com (owner, 18 Oct), as
+# Fuzon Apps' did. Every internal link goes through relative_url and every
+# full URL through absolute_url, so the switch is these lines.
+# ---------------------------------------------------------------------------
+url: "https://cybron.fixmypcperth.com"
+baseurl: ""
+
+# true adds noindex to every page and blocks crawling in robots.txt, so the
+# preview can never be indexed. false only for the live domain.
+staging: true
+
+timezone: Asia/Karachi
+plugins: []
+
+# Stylesheets are plain CSS in .scss files, minified by Jekyll's Sass.
+sass:
+  style: compressed
+  sourcemap: never
+
+# Fail the build on a Liquid or front matter mistake.
+liquid:
+  error_mode: strict
+  strict_filters: true
+strict_front_matter: true
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - STATUS.md
+  - SITE-PLAYBOOK.md
+  - _tools
+  - .github
+  - .claude
+  - vendor
+  - node_modules

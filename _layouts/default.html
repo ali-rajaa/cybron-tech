@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  {%- comment -%} Set before CSS loads, so the phone menu is hidden from
+  the first paint. site.css gates the menu on it, so everything still
+  works without JavaScript. {%- endcomment %}
+  <script>document.documentElement.classList.add('js');</script>
+  {%- comment -%}
+    The shell for every page. Front matter: title, description,
+    permalink; optional og_image, og_image_alt, noindex.
+    Every full URL goes through absolute_url (site.url).
+  {%- endcomment -%}
+  {%- assign _title = page.title | default: site.title -%}
+  {%- assign _desc = page.description | default: site.description -%}
+  {%- assign _clean_url = page.url | replace: "/index.html", "/" | replace: ".html", "" -%}
+  {%- assign _is_404 = false -%}
+  {%- if page.url == "/404.html" -%}{%- assign _is_404 = true -%}{%- endif %}
+  <title>{{ _title | escape }}</title>
+  <meta name="description" content="{{ _desc | escape }}">
+  {%- unless _is_404 %}
+  <link rel="canonical" href="{{ _clean_url | absolute_url }}">
+  {%- endunless %}
+  {%- if site.staging or page.noindex %}
+  <meta name="robots" content="noindex, nofollow">
+  {%- else %}
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  {%- endif %}
+
+  {%- assign _og_img = page.og_image | default: "/assets/og/default.jpg" -%}
+  {%- assign _og_alt = page.og_image_alt | default: "Cybron Technologies: software, apps and games" %}
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ _title | escape }}">
+  <meta property="og:description" content="{{ _desc | escape }}">
+  {%- unless _is_404 %}
+  <meta property="og:url" content="{{ _clean_url | absolute_url }}">
+  {%- endunless %}
+  <meta property="og:image" content="{{ _og_img | absolute_url }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ _og_alt | escape }}">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ _title | escape }}">
+  <meta name="twitter:description" content="{{ _desc | escape }}">
+  <meta name="twitter:image" content="{{ _og_img | absolute_url }}">
+  <meta name="twitter:image:alt" content="{{ _og_alt | escape }}">
+
+  <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="48x48">
+  <link rel="icon" href="{{ '/assets/icons/logo.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{ '/assets/icons/apple-touch-icon.png' | relative_url }}">
+  <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+  <meta name="theme-color" content="#13141e">
+
+  {%- assign _v = site.time | date: "%s" %}
+  <link rel="preload" href="{{ '/assets/fonts/inter-latin.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}?v={{ _v }}">
+  <script src="{{ '/assets/js/site.js' | relative_url }}?v={{ _v }}" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="scroll-sentinel" aria-hidden="true"></div>
+{% include icon-sprite.html %}
+{% include header.html %}
+<main id="main" tabindex="-1">
+{{ content }}
+</main>
+{% include footer.html %}
+</body>
+</html>

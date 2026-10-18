@@ -1,0 +1,33 @@
+{%- comment -%}
+  Header: logo and name, one link per section (_data/sections.yml) and a
+  "Get in touch" button. A dark translucent bar in the logo's navy, over
+  the page as it scrolls. site.js marks the section being read
+  (aria-current="true"). Below 860px a menu button opens a sheet with the
+  same links; without JavaScript the links show as a plain row that
+  wraps.
+{%- endcomment -%}
+{%- assign _home = '/' | relative_url -%}
+<header class="site-header" id="site-header">
+  <div class="wrap header-bar">
+    <a class="brand" href="{{ _home }}#top">
+      {% include logo.html class="brand-mark" %}
+      <span class="brand-name">{{ site.data.company.short }}<span class="brand-sub"> Technologies</span></span>
+    </a>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul class="nav-list" role="list">
+        {%- for s in site.data.sections %}
+        <li><a class="nav-link" href="{{ _home }}#{{ s.id }}">{{ s.label | escape }}</a></li>
+        {%- endfor %}
+      </ul>
+      <a class="btn btn--primary nav-sheet-cta" href="{{ _home }}#contact">Get in touch</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn--primary btn--sm header-cta" href="{{ _home }}#contact">Get in touch</a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg class="icon nav-toggle-open" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="icon nav-toggle-close" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="nav-scrim" id="nav-scrim" aria-hidden="true"></div>

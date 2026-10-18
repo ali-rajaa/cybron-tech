@@ -1,0 +1,30 @@
+# Company facts, typed once and read by every section, the footer and the
+# schema. Each line says where it came from. An empty value shows on the
+# page as a highlighted blank (_includes/blank.html), so nothing ships
+# with a made-up value. Fill a value here and every place updates.
+
+name: "Cybron Technologies"
+short: "Cybron"
+
+# LinkedIn company page (headquarters), found by search 18 Oct. To confirm.
+area: "Bahria Town Phase 7"
+city: "Rawalpindi"
+region: "Punjab"
+country: "Pakistan"
+country_code: "PK"
+
+# Not supplied yet (owner).
+email: ""
+phone: ""
+
+# Owner, 18 Oct (Facebook, LinkedIn); Instagram found by search
+# (@cybrontechnologies). Shown as words, never as the networks' logos.
+social:
+  - label: "LinkedIn"
+    url: "https://www.linkedin.com/company/cybron-technologies"
+  - label: "Facebook"
+    url: "https://www.facebook.com/cybrontechnologies/"
+  - label: "Instagram"
+    url: "https://www.instagram.com/cybrontechnologies/"
+
+linkedin_jobs: "https://www.linkedin.com/company/cybron-technologies/jobs/"

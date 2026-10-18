@@ -1,0 +1,6 @@
+{%- comment -%}
+  A fact the owner hasn't supplied yet: an amber-tinted blank, so it can't
+  be missed on the preview, with "to be confirmed" for screen readers.
+  Usage: {% include blank.html value=site.data.company.email %}
+{%- endcomment -%}
+{%- if include.value and include.value != "" -%}{{ include.value | escape }}{%- else -%}<span class="blank"><span class="visually-hidden">to be confirmed</span></span>{%- endif -%}

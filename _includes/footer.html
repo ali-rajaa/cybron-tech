@@ -1,0 +1,41 @@
+{%- comment -%}
+  Footer: logo and one line, the section links, the social links (as
+  words, never the networks' logos) and the copyright.
+{%- endcomment -%}
+{%- assign _home = '/' | relative_url -%}
+{%- assign _c = site.data.company -%}
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="{{ _home }}#top">
+        {% include logo.html class="brand-mark" %}
+        <span class="brand-name">{{ _c.short }}<span class="brand-sub"> Technologies</span></span>
+      </a>
+      <p class="footer-line">Software, apps and games, from first idea to launch.</p>
+    </div>
+    <nav class="footer-cols" aria-label="Footer">
+      <div class="footer-col">
+        <h2 class="footer-head">On this page</h2>
+        <ul role="list">
+          {%- for s in site.data.sections %}
+          <li><a href="{{ _home }}#{{ s.id }}">{{ s.label | escape }}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2 class="footer-head">Follow us</h2>
+        <ul role="list">
+          {%- for s in _c.social %}
+          <li><a href="{{ s.url }}" rel="noopener">{{ s.label | escape }}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="wrap">
+    <div class="footer-bottom">
+      <p>&copy; {{ site.time | date: "%Y" }} {{ _c.name }}</p>
+      <p>{{ _c.city }}, {{ _c.region }}, {{ _c.country }}</p>
+    </div>
+  </div>
+</footer>
