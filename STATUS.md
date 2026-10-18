@@ -18,7 +18,8 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 | Fact | Source |
 |---|---|
 | Company name "Cybron Technologies"; Facebook and LinkedIn pages | Owner, 18 Oct |
-| "Cybron Technologies" is a trademark: footer reads "© year Cybron Technologies™. All rights reserved." (™, not ®, until the owner confirms it's registered) | Owner, 18 Oct |
+| Cybron is a registered trademark: footer reads "© year Cybron Technologies. All rights reserved. Cybron® is a registered trademark of Cybron Technologies." | Owner, 18 Oct |
+| Social links show the network's outline icon beside its name (footer, About, Contact) and open in a new tab | Owner, 18 Oct |
 | Email `info@cybrontech.com`; no phone number on the site; no contact form | Owner, 18 Oct |
 | Instagram `@cybrontechnologies` | Search, 18 Oct; confirmed by the owner |
 | Office: **Bin Charigh Heights, Rawalpindi, Pakistan** | Owner, 18 Oct, with the full address (1st Floor, Bin Charigh Heights, Bahria Town Phase 7, Sector 1 Bahria Greens, Rawalpindi 46220). The owner asked for only "Bin Charigh Heights, Rawalpindi, Pakistan" on the site (footer, About, Contact; schema streetAddress and city) |
@@ -103,8 +104,8 @@ white with a hairline. No navy bands.
 - `_data/company.yml` (facts, socials; empty values show as highlighted
   blanks), `_data/services.yml`, `_data/sections.yml` (header links).
 - `_layouts/default.html` (head, SEO and share tags), `_includes/`
-  header, footer, logo, icon-sprite (line icons only; social links are
-  words, never the networks' logos), blank.
+  header, footer, logo, icon-sprite (line icons only, including the
+  three social glyphs in the same style), blank.
 - `assets/css/site.scss` (everything; apple-design motion, materials,
   type and preference handling as on Fuzon Apps), `assets/js/site.js`
   (header state, phone sheet, current section, reveal).

@@ -23,10 +23,13 @@ email: "info@cybrontech.com"
 # (@cybrontechnologies). Shown as words, never as the networks' logos.
 social:
   - label: "LinkedIn"
+    icon: "linkedin"
     url: "https://www.linkedin.com/company/cybron-technologies"
   - label: "Facebook"
+    icon: "facebook"
     url: "https://www.facebook.com/cybrontechnologies/"
   - label: "Instagram"
+    icon: "instagram"
     url: "https://www.instagram.com/cybrontechnologies/"
 
 linkedin_jobs: "https://www.linkedin.com/company/cybron-technologies/jobs/"

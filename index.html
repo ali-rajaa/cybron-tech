@@ -167,7 +167,7 @@ permalink: /
       <dl class="glance-list">
         <div><dt><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Based in</dt><dd>{% if _c.area != "" %}{{ _c.area }}, {% endif %}{{ _c.city }}, {{ _c.country }}</dd></div>
         <div><dt><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg>What we build</dt><dd>Mobile apps, games, AI and cloud solutions, and web software</dd></div>
-        <div><dt><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>Follow us</dt><dd class="glance-links">{% for s in _c.social %}<a href="{{ s.url }}" rel="noopener">{{ s.label | escape }}</a>{% endfor %}</dd></div>
+        <div><dt><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>Follow us</dt><dd class="social-links">{% for s in _c.social %}<a class="social-link" href="{{ s.url }}" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg><span class="social-label">{{ s.label | escape }}</span><span class="visually-hidden"> (opens in a new tab)</span></a>{% endfor %}</dd></div>
       </dl>
     </div>
   </div>
@@ -212,7 +212,7 @@ permalink: /
       </div>
       <div>
         <dt><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>Follow us</dt>
-        <dd class="contact-links">{% for s in _c.social %}<a class="link-arrow" href="{{ s.url }}" rel="noopener"><span class="link-text">{{ s.label | escape }}</span></a>{% endfor %}</dd>
+        <dd class="social-links">{% for s in _c.social %}<a class="social-link" href="{{ s.url }}" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg><span class="social-label">{{ s.label | escape }}</span><span class="visually-hidden"> (opens in a new tab)</span></a>{% endfor %}</dd>
       </div>
       <div>
         <dt><svg class="icon" aria-hidden="true"><use href="#i-briefcase"/></svg>Careers</dt>
