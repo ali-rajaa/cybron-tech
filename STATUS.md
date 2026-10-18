@@ -20,7 +20,7 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 | Company name "Cybron Technologies"; Facebook and LinkedIn pages | Owner, 18 Oct |
 | Email `info@cybrontech.com`; no phone number on the site; no contact form | Owner, 18 Oct |
 | Instagram `@cybrontechnologies` | Search, 18 Oct (owner to confirm) |
-| Bahria Town Phase 7, Rawalpindi, Punjab, Pakistan | LinkedIn company page via search (owner to confirm) |
+| Office in Rawalpindi, Punjab, Pakistan | Owner, 18 Oct: the office is real, in "Bin Chargh Heights" (spelling unconfirmed; nothing found online). The site shows the city only until the owner sends the exact address (`area` in `_data/company.yml`). The LinkedIn "Bahria Town Phase 7" is wrong and is not used |
 | Designs, develops and delivers software products, including gaming apps | LinkedIn via search |
 | Mobile, AI and cloud solutions | Instagram bio via search |
 | Web development, online applications, interactive interfaces | ZoomInfo via search |
@@ -38,7 +38,7 @@ products of our own as well as for others", and the Careers line.
 
 | Token | Value | Use |
 |---|---|---|
-| `--blue` | `#0072BD` | Logo, buttons, eyebrows and links on light grounds (5.1:1 on white, 4.7:1 on `--bg-alt`) |
+| `--accent` | `#0072BD` | Logo, primary button, focus rings, current-section marker (5.1:1 on white, 4.7:1 on `--bg-alt`) |
 | `--text-2` | `#4A5468` | Grey text on light (7.6:1) |
 
 **Light theme throughout** (owner, 18 Oct: "a light theme wide would be
@@ -54,30 +54,37 @@ white with a hairline. No navy bands.
 - **60-30-10.** Neutral grounds (white, `--bg-alt`, the logo navy);
   structure in greys and hairlines (`--line` is 7% ink); the accent
   (`--accent`, the logo blue) only on the primary action, focus rings and
-  the current-section marker. Eyebrows, ticks, icon wells, step nodes,
+  the current-section marker. Icons, step nodes,
   links and the hero traces are neutral. The logo keeps its blue.
 - **One primary action: "Get in touch"** (header, hero, phone menu, all
   to #contact). "Explore our services" and "See open roles" are ghost
   buttons; everything else is a text link with an underline that draws
   in and an arrow that slides.
 - **12-column grid** (`.grid`) for every section: hero 7/5, services
-  bento 8+4 then 4/4/4 (lead card split into copy and a hairline-divided
-  list), steps 3/3/3/3, about 6 + gap + 5 (asymmetric), contact 3/3/3/3,
-  footer 5 + 6.
+  an editorial list (sticky heading 4, list 7), steps 3/3/3/3, about
+  6 + gap + 5, careers 5 + 6, contact 6 + 5, footer 5 + 6 (three columns,
+  one column under 400px).
 - **Spacing**: sections 96 to 128px (144px on 1680px+ screens, where the
   measure also widens to 84rem).
-- **Motion**: hover transitions 300ms ease-in-out; a staggered
-  fade-and-rise on load (starts at 0.01 opacity so it never delays the
-  largest paint); four slow, faint pulses on the hero traces (the
-  rotating rings were removed as too busy); reduced motion turns all of
-  it off.
-- **Depth**: hairline borders, soft multi-layer shadows that deepen on
-  hover.
+- **Motion**: hover transitions 300ms ease-in-out (colour, opacity and
+  border only); a staggered fade-and-rise on load (starts at 0.01
+  opacity so it never delays the largest paint); reduced motion turns it
+  off. The hero circuit is still.
+- **Depth**: hairline borders and soft shadows; nothing lifts on hover.
 - **No label lines above headings** (owner, 18 Oct: "remove these weird
   AI generic headers"). No small-capitals eyebrows ("SOFTWARE COMPANY",
   "WHAT WE DO", ...), no "STEP 1" labels, no icon-in-a-circle above the
   Careers heading, and the footer column headings are plain sentence
   case. Headings lead their sections on their own. Don't add them back.
+- **Banned "AI" tropes** (owner, 18 Oct, strict): no purple, indigo or
+  neon gradients (flat solid tones only); no glows; no bento grids (lists,
+  tables and columns instead); no pill badges; corner radius 4 to 8px
+  only (`--radius-sm` 4, `--radius` 6, `--radius-lg` 8); no typing
+  animations; no particles, moving meshes, dot fields or grid-line
+  backgrounds; no hover scale or tilt; no centred hero with two buttons
+  (the hero is left-aligned on the 7/5 grid); no floating blurred
+  shapes; a structured header and footer. Lean on editorial structure,
+  type weight contrast and white space. Don't add any of these back.
 - **Contact**: one clear block, no form (owner, 18 Oct): the email set
   large, one primary "Email us" (mailto with a subject) and a "Copy
   address" ghost button (shown only where the clipboard works; result
@@ -104,8 +111,8 @@ white with a hairline. No navy bands.
 
 ## 5. Checks (18 Oct)
 
-Re-run after the guardrails pass (same day), all clean; plus 2560px
-screenshots. html-validate clean; axe zero violations at 1440 and 390; no overflow,
+Re-run after the banned-tropes pass (same day), all clean; plus 390 and
+2560px screenshots. html-validate clean; axe zero violations at 1440 and 390; no overflow,
 clipping, small tap targets, text under 12px or text within 16px of the
 edge at 15 widths (320 to 1920); CLS 0; no console errors; visible focus
 rings; works without JavaScript; 17 interaction checks (phone sheet,
@@ -134,7 +141,7 @@ desktop 100 / 100 / 100 (SEO 66 only because the preview is noindex).
 | # | Item |
 |---|---|
 | 1 | ~~Contact email~~ Done: info@cybrontech.com. No phone, no form (owner) |
-| 2 | Confirm the address (Bahria Town Phase 7, Rawalpindi) and the Instagram handle |
+| 2 | Send the exact office address ("Bin Chargh Heights": spelling, building and street) and confirm the Instagram handle |
 | 3 | Confirm or edit the draft copy (section 2) |
 | 4 | Logo as SVG or high-res, if one exists (the redraw matches the image) |
 | 5 | Where cybrontech.com is hosted, for the live move |

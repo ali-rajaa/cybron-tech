@@ -6,8 +6,11 @@
 name: "Cybron Technologies"
 short: "Cybron"
 
-# LinkedIn company page (headquarters), found by search 18 Oct. To confirm.
-area: "Bahria Town Phase 7"
+# Street address: owner says the office is in a building he named as
+# "Bin Chargh Heights" (18 Oct); not found anywhere to confirm the
+# spelling or street, so it stays empty (and isn't shown) until the owner
+# sends the exact address. The LinkedIn "Bahria Town Phase 7" was wrong.
+area: ""
 city: "Rawalpindi"
 region: "Punjab"
 country: "Pakistan"

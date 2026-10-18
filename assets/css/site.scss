@@ -15,6 +15,11 @@
    - One 12-column grid (.grid) for every section, with deliberate,
      sometimes asymmetric spans. Generous section spacing.
    - Ultra-thin low-opacity borders, soft layered shadows.
+   - No generic "AI site" tropes (owner, 18 Oct): no gradients, glows or
+     blurred shapes; no dot fields, grid lines, rings or moving
+     backgrounds; no card grids for everything (services are an editorial
+     list); corner radius 4 to 8px only; hovers change colour or border,
+     never lift or scale; no centred heading-and-buttons blocks.
    - Calm motion: transitions around 300ms, a staggered fade-and-rise on
      load, a spring for anything that moves, nothing that loops fast.
      Reduced motion, reduced transparency and more contrast each get a
@@ -43,12 +48,9 @@
   --well: #eef1f6;                  /* icon wells */
   --on-accent: #ffffff;             /* text on the accent button: 5.1:1 */
   --trace: #d9dee7;                 /* circuit lines around the logo */
-  --trace-pulse: rgba(95, 105, 125, 0.45);
-  --dots: rgba(13, 18, 32, 0.07);
   --glass: rgba(255, 255, 255, 0.82);       /* header material */
   --glass-strong: rgba(255, 255, 255, 0.92);
   --scrim: rgba(13, 18, 32, 0.28);
-  --brand-haze: rgba(0, 114, 189, 0.08);    /* the faint light behind the logo */
   --blank-fill: rgba(255, 170, 60, 0.2);
   --blank-line: #a35a00;
 
@@ -58,9 +60,9 @@
   --shadow-md: 0 1px 2px rgba(13, 18, 32, 0.04), 0 8px 24px rgba(13, 18, 32, 0.06), 0 24px 48px -12px rgba(13, 18, 32, 0.08);
   --shadow-lg: 0 2px 4px rgba(13, 18, 32, 0.04), 0 16px 40px rgba(13, 18, 32, 0.08), 0 48px 96px -24px rgba(13, 18, 32, 0.18);
 
-  --radius-sm: 10px;
-  --radius: 16px;
-  --radius-lg: 20px;
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 8px;
 
   /* ---- Layout ---- */
   --font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -237,7 +239,7 @@ main:focus { outline: none; }
   min-height: 2.75rem;
   padding: 0.625rem 1.25rem;
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.2;
@@ -443,35 +445,16 @@ main:focus { outline: none; }
 }
 
 /* ---------- Hero ----------
-   White, a faint dot field, one soft haze behind the logo, and the logo
-   with its circuit traces in light grey. Copy on 7 columns, visual on 5. */
+   Solid white. The logo with its circuit traces, still, in light grey.
+   Copy on 7 columns, the mark on 5. */
 .hero {
   position: relative;
-  overflow: clip;
-  isolation: isolate;
   margin-top: calc(var(--header-h) * -1);
   padding-top: calc(var(--header-h) + clamp(4rem, 9vw, 7rem));
   padding-bottom: clamp(5rem, 10vw, 8rem);
-  background: linear-gradient(180deg, var(--bg-alt), var(--bg) 70%);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
   color: var(--text);
-}
-.hero-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-.hero-glow { position: absolute; border-radius: 50%; }
-.hero-glow--a {
-  left: 72%;
-  top: 50%;
-  width: min(56rem, 120vw);
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  background: radial-gradient(circle closest-side, var(--brand-haze), transparent);
-}
-.hero-grid-dots {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, var(--dots) 1px, transparent 1.3px);
-  background-size: 28px 28px;
-  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 70% 50%, #000 10%, transparent 70%);
-  mask-image: radial-gradient(ellipse 60% 70% at 70% 50%, #000 10%, transparent 70%);
 }
 .hero-inner { align-items: center; row-gap: clamp(3rem, 7vw, 4rem); }
 @media (min-width: 1024px) {
@@ -517,27 +500,6 @@ main:focus { outline: none; }
 .hero-circuit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .hero-circuit .trace path { stroke: var(--trace); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .hero-circuit .trace-node circle { fill: var(--surface); stroke: var(--trace); stroke-width: 1.5; }
-.hero-circuit .trace-pulse path {
-  stroke: var(--trace-pulse);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-dasharray: 10 90;
-  stroke-dashoffset: 100;
-  opacity: 0;
-}
-.hero-orbit { fill: none; stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 2 8; }
-.hero-orbit--outer { stroke-dasharray: 1 12; opacity: 0.6; }
-.hero-logo-glow {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 50%;
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  border-radius: 50%;
-  background: radial-gradient(circle closest-side, var(--brand-haze), transparent);
-  filter: blur(12px);
-}
 .hero-logo {
   position: absolute;
   left: 50%;
@@ -546,35 +508,22 @@ main:focus { outline: none; }
   height: auto;
   aspect-ratio: 1;
   translate: -50% -50%;
-  filter: drop-shadow(0 18px 36px rgba(0, 60, 110, 0.22));
 }
 
 /* Load: the hero copy and visual rise and fade in, staggered. Starts at
    0.01 opacity, not 0, so the largest paint isn't held back. */
 @media (prefers-reduced-motion: no-preference) {
-  .hero-copy > *, .hero-visual { animation: rise 0.9s var(--ease-out) both; }
+  .hero-copy > *, .hero-visual { animation: rise 0.8s var(--ease-out) both; }
   .hero-copy > :nth-child(2) { animation-delay: 70ms; }
   .hero-copy > :nth-child(3) { animation-delay: 140ms; }
   .hero-copy > :nth-child(4) { animation-delay: 210ms; }
   .hero-copy > :nth-child(5) { animation-delay: 280ms; }
-  .hero-visual { animation-duration: 1.2s; animation-delay: 150ms; }
-  /* Four slow, faint pulses outward along the traces: calm, not busy. */
-  .hero-circuit .trace-pulse path { animation: pulse 9s var(--ease-in-out) infinite; }
-  .hero-circuit .trace-pulse path:nth-child(2) { animation-delay: 2.25s; }
-  .hero-circuit .trace-pulse path:nth-child(3) { animation-delay: 4.5s; }
-  .hero-circuit .trace-pulse path:nth-child(4) { animation-delay: 6.75s; }
+  .hero-visual { animation-delay: 150ms; }
 }
 @keyframes rise {
   from { opacity: 0.01; transform: translateY(14px); }
   to { opacity: 1; transform: none; }
 }
-@keyframes pulse {
-  0% { stroke-dashoffset: 100; opacity: 0; }
-  6% { opacity: 1; }
-  30% { stroke-dashoffset: 10; opacity: 1; }
-  36%, 100% { stroke-dashoffset: 0; opacity: 0; }
-}
-
 /* ---------- Sections ---------- */
 .section { padding-block: var(--space-section); }
 .section--light { background: var(--bg-alt); }
@@ -598,51 +547,52 @@ main:focus { outline: none; }
 }
 .section-head--center .section-sub { margin-inline: auto; }
 
-/* Cards: a white surface, an ultra-thin border, a soft shadow that
-   deepens on hover. Shared by services and contact. */
-.card {
-  position: relative;
-  padding: clamp(1.75rem, 3vw, 2.25rem);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--dur-hover) var(--ease-in-out), border-color var(--dur-hover) var(--ease-in-out), transform var(--dur-spring) var(--ease-spring);
-}
-@media (hover: hover) {
-  .card:hover { border-color: var(--line-strong); box-shadow: var(--shadow-md); transform: translateY(-2px); }
-}
 .well {
   display: inline-grid;
   place-items: center;
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: 12px;
+  border-radius: var(--radius);
   background: var(--well);
   color: var(--text);
 }
 .well .icon { width: 1.375rem; height: 1.375rem; }
 
-/* ---------- Services: a bento on the grid ----------
-   lg: lead 8 + 4, then 4 + 4 + 4. md: lead 12, then 6 + 6. */
+/* ---------- Services: an editorial list ----------
+   Heading on 4 columns (it stays in view while the list scrolls on wide
+   screens), the list on 8: one row per service on a hairline, the name
+   beside the description and its scope. */
+.services-layout { row-gap: 0; }
+@media (min-width: 1024px) {
+  .services-head { grid-column: 1 / span 4; align-self: start; position: sticky; top: calc(var(--header-h) + 2rem); margin-bottom: 0; }
+  .service-list { grid-column: 6 / span 7; }
+}
+.service-row { padding-block: 2rem; border-top: 1px solid var(--line-strong); }
+.service-row:last-child { border-bottom: 1px solid var(--line-strong); }
+.service-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 650;
+  letter-spacing: var(--track-headline);
+}
+.service-title .icon { width: 1.25rem; height: 1.25rem; color: var(--text-3); }
+.service-body { margin-top: 0.75rem; }
+.service-text { max-width: 36rem; color: var(--text-2); line-height: var(--leading-relaxed); }
+.service-scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0;
+  margin-top: 1rem;
+  color: var(--text-3);
+  font-size: 0.875rem;
+  letter-spacing: var(--track-small);
+}
+.service-scope li + li::before { content: "/"; margin-inline: 0.625rem; color: var(--line-strong); }
 @media (min-width: 768px) {
-  .service-grid > * { grid-column: span 6; }
-  .service-grid > .service-card--lead { grid-column: span 12; }
-}
-@media (min-width: 1024px) {
-  .service-grid > * { grid-column: span 4; }
-  .service-grid > .service-card--lead { grid-column: span 8; }
-}
-.service-card { display: flex; flex-direction: column; }
-.service-title { margin-top: 1.5rem; font-size: 1.25rem; font-weight: 650; letter-spacing: var(--track-headline); }
-.service-card--lead .service-title { font-size: clamp(1.5rem, 1.25rem + 0.9vw, 1.875rem); font-weight: 700; letter-spacing: var(--track-title-2); }
-.service-text { margin-top: 0.625rem; color: var(--text-2); line-height: var(--leading-relaxed); }
-.service-card--lead .service-text { max-width: 34rem; font-size: 1.0625rem; }
-.service-card .check-list { margin-top: auto; padding-top: 1.5rem; color: var(--text-2); font-size: 0.9375rem; }
-@media (min-width: 1024px) {
-  .service-card--lead { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); column-gap: 3rem; align-content: start; }
-  .service-card--lead > .well, .service-card--lead > .service-title, .service-card--lead > .service-text { grid-column: 1; }
-  .service-card--lead > .check-list { grid-column: 2; grid-row: 1 / span 3; align-self: end; margin-top: 0; padding: 0 0 0 2rem; border-left: 1px solid var(--line); }
+  .service-row { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); column-gap: 2rem; align-items: baseline; }
+  .service-body { margin-top: 0; }
 }
 
 /* ---------- Approach: four steps on 3 columns each ----------
@@ -660,7 +610,7 @@ main:focus { outline: none; }
   place-items: center;
   width: 3rem;
   height: 3rem;
-  border-radius: 50%;
+  border-radius: var(--radius);
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--line-strong);
@@ -723,36 +673,27 @@ main:focus { outline: none; }
   .glance-links a:hover { text-decoration-color: currentColor; }
 }
 
-/* ---------- Careers: a light panel with faint grid lines ---------- */
+/* ---------- Careers: a left-aligned panel ----------
+   Heading on 5 columns, the text and link on 6 beside it. */
 .careers-panel {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.5rem, 6vw, 4rem);
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--bg-alt);
-  text-align: center;
+  align-items: center;
 }
-.careers-lines {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 63px, var(--line) 63px 64px),
-    repeating-linear-gradient(0deg, transparent 0 63px, var(--line) 63px 64px);
-  -webkit-mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, #000 15%, transparent 80%);
-  mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, #000 15%, transparent 80%);
+@media (min-width: 1024px) {
+  .careers-title { grid-column: 1 / span 5; }
+  .careers-body { grid-column: 7 / span 6; }
 }
-.careers-panel > :not(.careers-lines) { max-width: 40rem; margin-inline: auto; }
 .careers-title {
-  font-size: clamp(2.25rem, 1.5rem + 3.2vw, 3.75rem);
+  font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
   font-weight: 700;
-  line-height: var(--leading-tight);
+  line-height: 1.1;
   letter-spacing: var(--track-display);
 }
-.careers-sub { margin-top: 1.25rem; color: var(--text-2); font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); line-height: var(--leading-relaxed); text-wrap: pretty; }
-.careers-actions { display: flex; justify-content: center; margin-top: 2.5rem; }
+.careers-sub { margin: 0; color: var(--text-2); font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); line-height: var(--leading-relaxed); text-wrap: pretty; }
+.careers-actions { display: flex; margin-top: 2rem; }
 @media (max-width: 479.98px) {
   .careers-actions .btn { width: 100%; white-space: normal; }
 }
@@ -817,7 +758,13 @@ main:focus { outline: none; }
   .footer-cols { grid-column: 7 / span 6; }
 }
 .footer-line { max-width: 22rem; margin-top: 1rem; color: var(--text-2); font-size: 0.9375rem; line-height: 1.6; }
-.footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem var(--grid-gap); }
+.footer-cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem var(--grid-gap); }
+@media (min-width: 400px) {
+  .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 640px) {
+  .footer-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 .footer-head { color: var(--text); font-size: 0.875rem; font-weight: 600; letter-spacing: var(--track-small); }
 .footer-col ul { margin-top: 0.75rem; }
 .footer-col a {
@@ -875,12 +822,9 @@ main:focus { outline: none; }
   .js .site-nav, .js .nav-open .site-nav { transform: none; }
   .btn-arrow, .link-arrow .icon, .nav-link::after { transition: none; }
   .btn:hover .btn-arrow, .link-arrow:hover .icon { transform: none; }
-  .card { transition: box-shadow var(--dur-hover) ease, border-color var(--dur-hover) ease; }
-  .card:hover { transform: none; }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   .site-header, .site-header.is-scrolled { background: var(--surface); box-shadow: inset 0 -1px 0 var(--line-strong); -webkit-backdrop-filter: none; backdrop-filter: none; }
-  .hero-grid-dots, .careers-lines { display: none; }
 }
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .site-header, .site-header.is-scrolled { background: var(--surface); }

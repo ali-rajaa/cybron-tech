@@ -35,7 +35,9 @@ permalink: /
       {%- endif %}
       "address": {
         "@type": "PostalAddress",
+        {%- if _c.area != "" %}
         "streetAddress": {{ _c.area | jsonify }},
+        {%- endif %}
         "addressLocality": {{ _c.city | jsonify }},
         "addressRegion": {{ _c.region | jsonify }},
         "addressCountry": {{ _c.country_code | jsonify }}
@@ -55,10 +57,6 @@ permalink: /
 </script>
 
 <section class="hero" id="top" aria-labelledby="hero-title">
-  <div class="hero-bg" aria-hidden="true">
-    <div class="hero-glow hero-glow--a"></div>
-    <div class="hero-grid-dots"></div>
-  </div>
   <div class="wrap grid hero-inner">
     <div class="hero-copy">
       <h1 id="hero-title" class="hero-title">We design, build and ship software products.</h1>
@@ -74,10 +72,10 @@ permalink: /
       </ul>
     </div>
 
-    {%- comment -%} The logo with its circuit traces drawn out across the
-    hero: right-angled traces from the disc to open nodes, the logo's own
-    motif. Four slow, faint pulses run outwards (site.scss "Hero"); still
-    with reduced motion. Decorative. {%- endcomment %}
+    {%- comment -%} The logo with its circuit traces drawn out from the
+    disc to open nodes: the logo's own motif, still and in light grey.
+    No glows, pulses, rings or background effects (owner, 18 Oct).
+    Decorative. {%- endcomment %}
     <div class="hero-visual" aria-hidden="true">
       <svg class="hero-circuit" viewBox="0 0 520 440" fill="none">
         <g class="trace">
@@ -87,10 +85,6 @@ permalink: /
           <path d="M334 150L358 126H408L424 110"/><path d="M334 290L358 314H400L416 330"/>
           <path d="M260 112V58L280 38H332"/><path d="M260 328V382L240 402H188"/>
         </g>
-        <g class="trace-pulse">
-          <path pathLength="100" d="M164 220H16"/><path pathLength="100" d="M356 220H504"/>
-          <path pathLength="100" d="M260 112V58L280 38H332"/><path pathLength="100" d="M260 328V382L240 402H188"/>
-        </g>
         <g class="trace-node">
           <circle cx="40" cy="176" r="5"/><circle cx="12" cy="220" r="5"/><circle cx="48" cy="264" r="5"/>
           <circle cx="93" cy="107" r="5"/><circle cx="101" cy="333" r="5"/>
@@ -98,32 +92,33 @@ permalink: /
           <circle cx="427" cy="107" r="5"/><circle cx="419" cy="333" r="5"/>
           <circle cx="336" cy="38" r="5"/><circle cx="184" cy="402" r="5"/>
         </g>
-        <circle class="hero-orbit" cx="260" cy="220" r="138"/>
-        <circle class="hero-orbit hero-orbit--outer" cx="260" cy="220" r="170"/>
       </svg>
-      <div class="hero-logo-glow"></div>
       {% include logo.html class="hero-logo" %}
     </div>
   </div>
 </section>
 
 <section class="section section--light" id="services" aria-labelledby="services-title">
-  <div class="wrap">
-    <div class="section-head reveal">
+  {%- comment -%} An editorial list, not a card grid: the heading on the
+  left, one row per service on the right, each on a hairline (owner,
+  18 Oct: no bento overuse). {%- endcomment %}
+  <div class="wrap grid services-layout">
+    <div class="section-head services-head reveal">
       <h2 id="services-title">Software for phones, the web and the cloud</h2>
       <p class="section-sub">Five kinds of work, one team. We take products from the first sketch to launch, and keep improving them after.</p>
     </div>
-    <div class="grid service-grid">
+    <div class="service-list">
       {%- for s in site.data.services %}
-      <article class="card service-card{% if forloop.first %} service-card--lead{% endif %} reveal">
-        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-{{ s.icon }}"/></svg></span>
-        <h3 class="service-title">{{ s.title | escape }}</h3>
-        <p class="service-text">{{ s.text | escape }}</p>
-        <ul class="check-list" role="list">
-          {%- for pt in s.points %}
-          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span>{{ pt | escape }}</span></li>
-          {%- endfor %}
-        </ul>
+      <article class="service-row reveal">
+        <h3 class="service-title"><svg class="icon" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg>{{ s.title | escape }}</h3>
+        <div class="service-body">
+          <p class="service-text">{{ s.text | escape }}</p>
+          <ul class="service-scope" role="list">
+            {%- for pt in s.points %}
+            <li>{{ pt | escape }}</li>
+            {%- endfor %}
+          </ul>
+        </div>
       </article>
       {%- endfor %}
     </div>
@@ -132,7 +127,7 @@ permalink: /
 
 <section class="section" id="approach" aria-labelledby="approach-title">
   <div class="wrap">
-    <div class="section-head section-head--center reveal">
+    <div class="section-head reveal">
       <h2 id="approach-title">From first idea to launch, and after</h2>
       <p class="section-sub">Every product goes through the same four steps, so you always know where it stands.</p>
     </div>
@@ -170,7 +165,7 @@ permalink: /
     </div>
     <div class="glance reveal">
       <dl class="glance-list">
-        <div><dt><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Based in</dt><dd>{{ _c.area }}, {{ _c.city }}, {{ _c.country }}</dd></div>
+        <div><dt><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Based in</dt><dd>{% if _c.area != "" %}{{ _c.area }}, {% endif %}{{ _c.city }}, {{ _c.country }}</dd></div>
         <div><dt><svg class="icon" aria-hidden="true"><use href="#i-layers"/></svg>What we build</dt><dd>Mobile apps, games, AI and cloud solutions, and web software</dd></div>
         <div><dt><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>Follow us</dt><dd class="glance-links">{% for s in _c.social %}<a href="{{ s.url }}" rel="noopener">{{ s.label | escape }}</a>{% endfor %}</dd></div>
       </dl>
@@ -180,12 +175,13 @@ permalink: /
 
 <section class="section careers" id="careers" aria-labelledby="careers-title">
   <div class="wrap">
-    <div class="careers-panel reveal">
-      <div class="careers-lines" aria-hidden="true"></div>
+    <div class="careers-panel grid reveal">
       <h2 id="careers-title" class="careers-title">Build software with us</h2>
+      <div class="careers-body">
       <p class="careers-sub">We are always keen to hear from designers, developers and game makers. Follow {{ _c.name }} on LinkedIn to see open roles.</p>
       <div class="careers-actions">
         <a class="btn btn--ghost btn--lg" href="{{ _c.linkedin_jobs }}" rel="noopener">See open roles on LinkedIn<svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></a>
+      </div>
       </div>
     </div>
   </div>
@@ -196,7 +192,7 @@ permalink: /
   one primary button and a copy button (shown only where the clipboard
   works). Office, social and careers sit beside it in a quiet details
   card. No form and no phone number (owner, 18 Oct). {%- endcomment %}
-  {%- capture _q %}{{ _c.name }} {{ _c.area }} {{ _c.city }}{% endcapture %}
+  {%- capture _q %}{{ _c.name }}{% if _c.area != "" %} {{ _c.area }}{% endif %} {{ _c.city }}{% endcapture %}
   <div class="wrap grid contact-grid">
     <div class="contact-intro reveal">
       <h2 id="contact-title">Let's build something together</h2>
@@ -211,7 +207,7 @@ permalink: /
     <dl class="contact-details reveal">
       <div>
         <dt><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Office</dt>
-        <dd>{{ _c.area }}<br>{{ _c.city }}, {{ _c.region }}, {{ _c.country }}</dd>
+        <dd>{% if _c.area != "" %}{{ _c.area }}<br>{% endif %}{{ _c.city }}, {{ _c.region }}, {{ _c.country }}</dd>
         <dd><a class="link-arrow" href="https://www.google.com/maps/search/?api=1&amp;query={{ _q | url_encode }}" rel="noopener"><span class="link-text">Open in Google Maps</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></dd>
       </div>
       <div>
