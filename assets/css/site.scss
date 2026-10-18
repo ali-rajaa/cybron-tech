@@ -328,7 +328,10 @@ main:focus { outline: none; }
   text-decoration: none;
   white-space: nowrap;
 }
-.brand-mark { width: 2rem; height: 2rem; }
+/* The full logo (disc plus circuit traces, 150 x 88). At this size the
+   traces need a heavier line than the source to stay visible. */
+.brand-mark { width: 3.84rem; height: 2.25rem; flex: none; }
+.brand-mark .logo-traces { stroke-width: 2.4; }
 .brand-name { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; }
 .brand-sub { font-weight: 400; color: var(--text-2); }
 

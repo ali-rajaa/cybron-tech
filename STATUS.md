@@ -26,7 +26,7 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 | Web development, online applications, interactive interfaces | ZoomInfo via search |
 | The company's own apps and games are its own, but are **not named** on the site | Owner, 18 Oct |
 | Location only where it's needed (footer, About "Based in", Contact), not in the hero | Owner, 18 Oct |
-| Logo: blue disc, white ring, white C with a notch, three circuit traces each side | Owner's image; redrawn as SVG geometry (`_includes/logo.html`), overlay-checked against the source (mean pixel difference 1.7/255) |
+| Logo: blue disc, white ring, white C with a notch, three circuit traces each side | Owner's image; redrawn as SVG geometry (`_includes/logo.html`), overlay-checked against the source (mean pixel difference 1.7/255). Header and footer use the full logo with traces; favicon and app icons use the disc only (owner, 18 Oct) |
 | Colours: blue `#0072BD`, navy `#13141E`, white | Sampled from the logo |
 
 **Draft copy for the owner to confirm** (general and true for the kind of
