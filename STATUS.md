@@ -20,7 +20,7 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 | Company name "Cybron Technologies"; Facebook and LinkedIn pages | Owner, 18 Oct |
 | "Cybron Technologies" is a trademark: footer reads "© year Cybron Technologies™. All rights reserved." (™, not ®, until the owner confirms it's registered) | Owner, 18 Oct |
 | Email `info@cybrontech.com`; no phone number on the site; no contact form | Owner, 18 Oct |
-| Instagram `@cybrontechnologies` | Search, 18 Oct (owner to confirm) |
+| Instagram `@cybrontechnologies` | Search, 18 Oct; confirmed by the owner |
 | Office: **Bin Charigh Heights, Rawalpindi, Pakistan** | Owner, 18 Oct, with the full address (1st Floor, Bin Charigh Heights, Bahria Town Phase 7, Sector 1 Bahria Greens, Rawalpindi 46220). The owner asked for only "Bin Charigh Heights, Rawalpindi, Pakistan" on the site (footer, About, Contact; schema streetAddress and city) |
 | Designs, develops and delivers software products, including gaming apps | LinkedIn via search |
 | Mobile, AI and cloud solutions | Instagram bio via search |
@@ -29,6 +29,8 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 | Location only where it's needed (footer, About "Based in", Contact), not in the hero | Owner, 18 Oct |
 | Logo: blue disc, white ring, white C with a notch, three circuit traces each side | Owner's image; redrawn as SVG geometry (`_includes/logo.html`), overlay-checked against the source (mean pixel difference 1.7/255). Header and footer use the full logo with traces; favicon and app icons use the disc only (owner, 18 Oct) |
 | Colours: blue `#0072BD`, navy `#13141E`, white | Sampled from the logo |
+
+**Voice**: first person ("we") on the page (owner, 18 Oct: "not 3rd POV"); only the search description and share card name the company.
 
 **Draft copy for the owner to confirm** (general and true for the kind of
 work, but not confirmed by the owner): the three points under each
@@ -142,7 +144,7 @@ desktop 100 / 100 / 100 (SEO 66 only because the preview is noindex).
 | # | Item |
 |---|---|
 | 1 | ~~Contact email~~ Done: info@cybrontech.com. No phone, no form (owner) |
-| 2 | ~~Office address~~ Done: Bin Charigh Heights, Rawalpindi, Pakistan. Still to confirm: the Instagram handle |
+| 2 | ~~Office address~~ Done: Bin Charigh Heights, Rawalpindi, Pakistan. Instagram handle confirmed |
 | 3 | Confirm or edit the draft copy (section 2) |
 | 4 | Logo as SVG or high-res, if one exists (the redraw matches the image) |
 | 5 | Where cybrontech.com is hosted, for the live move |
