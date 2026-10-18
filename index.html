@@ -57,37 +57,39 @@ permalink: /
 </script>
 
 <section class="hero" id="top" aria-labelledby="hero-title">
+  {%- comment -%} The circuit runs through the hero (owner, 18 Oct): a
+  line under the actions with a drop and an open node per service, as in
+  the logo, joined by site.js to a trace of the circuit on the right.
+  Hovering or focusing a service turns its drop, node and matching trace
+  blue (colour only). Heading in two weights: what we make, then how. {%- endcomment %}
   <div class="wrap grid hero-inner">
     <div class="hero-copy">
-      <h1 id="hero-title" class="hero-title">We design, build and ship software products.</h1>
-      <p class="hero-lead">From mobile apps and games to AI, cloud and the web, we take every product from first idea and design through to launch.</p>
+      <h1 id="hero-title" class="hero-title"><span class="hero-title-a">Apps, games and software.</span> <span class="hero-title-b">Designed, built and shipped in-house.</span></h1>
+      <p class="hero-lead">We take every product from first idea and design to launch, and keep improving it with every update after.</p>
       <div class="hero-actions">
         <a class="btn btn--primary btn--lg" href="#contact">Get in touch<svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        <a class="btn btn--ghost btn--lg" href="#services">Explore our services</a>
+        <a class="link-arrow" href="#services"><span class="link-text">See our services</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
       </div>
-      <ul class="hero-skills" role="list" aria-label="What we build">
+      <ul class="bus" role="list" aria-label="What we build" data-bus>
         {%- for s in site.data.services %}
-        <li><svg class="icon" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg>{{ s.short | escape }}</li>
+        <li class="bus-stop"><a href="#service-{{ s.short | slugify }}"><span class="bus-name">{{ s.short | escape }}</span><span class="bus-line">{{ s.line | escape }}</span></a></li>
         {%- endfor %}
       </ul>
     </div>
 
-    {%- comment -%} The logo with its circuit traces drawn out from the
-    disc to open nodes: the logo's own motif, still and in light grey.
-    No glows, pulses, rings or background effects (owner, 18 Oct).
-    Decorative. {%- endcomment %}
+    {%- comment -%} The logo with its circuit traces, in light grey. The
+    five left-hand traces (t1 to t5, top to bottom) pair with the five
+    services in order. No glows, pulses or background effects. Decorative. {%- endcomment %}
     <div class="hero-visual" aria-hidden="true">
       <svg class="hero-circuit" viewBox="0 0 520 440" fill="none">
         <g class="trace">
-          <path d="M168 196H124L104 176H44"/><path d="M164 220H16"/><path d="M168 244H118L98 264H52"/>
-          <path d="M186 150L162 126H112L96 110"/><path d="M186 290L162 314H120L104 330"/>
+          <path class="t1" d="M186 150L162 126H112L96 110"/><path class="t2" d="M168 196H124L104 176H44"/><path class="t3" d="M164 220H16"/><path class="t4" d="M168 244H118L98 264H52"/><path class="t5" d="M186 290L162 314H120L104 330"/>
           <path d="M352 196H396L416 176H476"/><path d="M356 220H504"/><path d="M352 244H402L422 264H468"/>
           <path d="M334 150L358 126H408L424 110"/><path d="M334 290L358 314H400L416 330"/>
           <path d="M260 112V58L280 38H332"/><path d="M260 328V382L240 402H188"/>
         </g>
         <g class="trace-node">
-          <circle cx="40" cy="176" r="5"/><circle cx="12" cy="220" r="5"/><circle cx="48" cy="264" r="5"/>
-          <circle cx="93" cy="107" r="5"/><circle cx="101" cy="333" r="5"/>
+          <circle class="t1" cx="93" cy="107" r="5"/><circle class="t2" cx="40" cy="176" r="5"/><circle class="t3" cx="12" cy="220" r="5"/><circle class="t4" cx="48" cy="264" r="5"/><circle class="t5" cx="101" cy="333" r="5" data-bus-end/>
           <circle cx="480" cy="176" r="5"/><circle cx="508" cy="220" r="5"/><circle cx="472" cy="264" r="5"/>
           <circle cx="427" cy="107" r="5"/><circle cx="419" cy="333" r="5"/>
           <circle cx="336" cy="38" r="5"/><circle cx="184" cy="402" r="5"/>
@@ -95,6 +97,7 @@ permalink: /
       </svg>
       {% include logo.html class="hero-logo" %}
     </div>
+    <svg class="bus-link" aria-hidden="true" focusable="false" data-bus-link><path pathLength="1"/></svg>
   </div>
 </section>
 

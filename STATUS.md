@@ -34,8 +34,8 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 **Voice**: first person ("we") on the page (owner, 18 Oct: "not 3rd POV"); only the search description and share card name the company.
 
 **Draft copy for the owner to confirm** (general and true for the kind of
-work, but not confirmed by the owner): the three points under each
-service (`_data/services.yml`), the four "How we work" steps, "We build
+work, but not confirmed by the owner): the three points and the hero line
+under each service (`_data/services.yml`), the four "How we work" steps, "We build
 products of our own as well as for others", and the Careers line.
 
 ## 3. Colours (contrast measured)
@@ -89,6 +89,15 @@ white with a hairline. No navy bands.
   (the hero is left-aligned on the 7/5 grid); no floating blurred
   shapes; a structured header and footer. Lean on editorial structure,
   type weight contrast and white space. Don't add any of these back.
+- **Hero** (owner, 18 Oct, "the circuit runs through the page"): the
+  heading in two weights at one size ("Apps, games and software." bold
+  ink, "Designed, built and shipped in-house." regular grey); one button
+  plus a text link; a circuit line under them with a drop and open node
+  per service (name and one line, each linking to its row), joined by
+  `site.js` to the circuit's lower-left node on wide screens. Hovering
+  or focusing a service turns its node and matching circuit trace blue.
+  The line draws once on load; reduced motion skips it. Vertical line on
+  phones.
 - **Contact**: one clear block, no form (owner, 18 Oct): the email set
   large, one primary "Email us" (mailto with a subject) and a "Copy
   address" ghost button (shown only where the clipboard works; result

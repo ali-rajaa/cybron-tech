@@ -101,6 +101,37 @@
     });
   });
 
+  /* ---- Hero: join the circuit line to the circuit ----
+     On wide screens, where the circuit sits beside the copy, draw a
+     trace from the end of the line under the actions to the circuit's
+     lower-left node: along, a 45-degree bend, along. Elsewhere, none. */
+  var bus = document.querySelector('[data-bus]');
+  var busLink = document.querySelector('[data-bus-link]');
+  var busEnd = document.querySelector('[data-bus-end]');
+  if (bus && busLink && busEnd) {
+    var linkPath = busLink.querySelector('path');
+    var drawLink = function () {
+      var box = busLink.getBoundingClientRect();
+      var b = bus.getBoundingClientRect();
+      var n = busEnd.getBoundingClientRect();
+      var sx = b.right - box.left, sy = b.top - box.top + 0.75;
+      var ex = n.left - box.left, ey = n.top + n.height / 2 - box.top;
+      if (!window.matchMedia('(min-width: 1024px)').matches || ex - sx < 24) {
+        linkPath.removeAttribute('d');
+        return;
+      }
+      var dy = ey - sy, run = 12;
+      var bend = Math.max(sx, ex - run - Math.abs(dy));
+      linkPath.setAttribute('d', 'M' + sx + ' ' + sy + 'H' + bend + 'L' + (ex - run) + ' ' + ey + 'H' + ex);
+    };
+    drawLink();
+    /* Again once the load rise and the web font have settled. */
+    bus.parentNode.parentNode.addEventListener('animationend', drawLink);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawLink);
+    if ('ResizeObserver' in window) new ResizeObserver(drawLink).observe(bus.parentNode.parentNode);
+    else window.addEventListener('resize', drawLink);
+  }
+
   /* ---- Reveal on scroll ----
      Content is hidden only after this line runs (.reveal-ready), and only
      when IntersectionObserver exists, so it can never stay hidden. */

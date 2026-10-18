@@ -453,7 +453,7 @@ main:focus { outline: none; }
 .hero {
   position: relative;
   margin-top: calc(var(--header-h) * -1);
-  padding-top: calc(var(--header-h) + clamp(4rem, 9vw, 7rem));
+  padding-top: calc(var(--header-h) + clamp(3.5rem, 7vw, 5.5rem));
   padding-bottom: clamp(5rem, 10vw, 8rem);
   border-bottom: 1px solid var(--line);
   background: var(--bg);
@@ -464,13 +464,18 @@ main:focus { outline: none; }
   .hero-copy { grid-column: 1 / span 7; }
   .hero-visual { grid-column: 8 / span 5; }
 }
+.hero-inner { position: relative; }
+/* Two weights, one size: what we make (bold, ink), then how (regular,
+   grey). The contrast carries the heading; no decoration. */
 .hero-title {
-  max-width: 14ch;
-  font-size: clamp(2.625rem, 1.5rem + 4.4vw, 5rem);
+  font-size: clamp(2.375rem, 1.3rem + 3vw, 3.875rem);
   font-weight: 700;
-  line-height: var(--leading-tight);
+  line-height: 1.04;
   letter-spacing: var(--track-display);
+  text-wrap: balance;
 }
+.hero-title-a, .hero-title-b { display: block; }
+.hero-title-b { font-weight: 400; color: var(--text-2); }
 .hero-lead {
   max-width: 34rem;
   margin-top: 1.5rem;
@@ -479,30 +484,83 @@ main:focus { outline: none; }
   line-height: 1.6;
   text-wrap: pretty;
 }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2.5rem; }
-.hero-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.75rem;
-  max-width: 34rem;
-  margin-top: 3.5rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--line);
-  color: var(--text-2);
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: var(--track-small);
-}
-.hero-skills li { display: inline-flex; align-items: center; gap: 0.5rem; }
-.hero-skills .icon { color: var(--text-3); width: 1rem; height: 1rem; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2.25rem; }
 @media (max-width: 479.98px) {
   .hero-actions .btn { width: 100%; }
 }
 
+/* The circuit line: one hairline under the actions, a short drop and an
+   open node per service (the logo's own trace-and-node), the name and
+   one line beneath. Stacks into a vertical line on phones. */
+.bus { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); margin-top: 3rem; }
+.bus::before {
+  content: "";
+  position: absolute;
+  top: 1.35rem;
+  bottom: 1.35rem;
+  left: calc(0.40625rem - 0.75px);
+  width: 1.5px;
+  background: var(--trace);
+  transform-origin: top;
+}
+.bus-stop a {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 0 0.625rem 2rem;
+  color: var(--text);
+  text-decoration: none;
+}
+.bus-stop a::after {
+  content: "";
+  position: absolute;
+  top: 0.95rem;
+  left: 0;
+  width: 0.8125rem;
+  height: 0.8125rem;
+  border: 1.5px solid var(--trace);
+  border-radius: 50%;
+  background: var(--surface);
+  transition: border-color var(--dur-hover) var(--ease-in-out), background-color var(--dur-hover) var(--ease-in-out);
+}
+.bus-name { font-size: 1rem; font-weight: 600; letter-spacing: var(--track-small); }
+.bus-line { color: var(--text-2); font-size: 0.875rem; line-height: 1.45; }
+@media (min-width: 640px) {
+  .bus { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 3.5rem; }
+  .bus::before { top: 0; bottom: auto; left: calc(0.40625rem - 0.75px); right: 0; width: auto; height: 1.5px; transform-origin: left; }
+  .bus-stop a { padding: 2.5rem 1rem 0 0; }
+  .bus-stop a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(0.40625rem - 0.75px);
+    width: 1.5px;
+    height: 0.875rem;
+    background: var(--trace);
+    transition: background-color var(--dur-hover) var(--ease-in-out);
+  }
+  .bus-stop a::after { top: 0.875rem; }
+}
+/* Hover or focus a service: its drop and node, and its trace in the
+   circuit, turn blue. Colour only; nothing moves. */
+.bus-stop a:is(:hover, :focus-visible)::before { background: var(--accent); }
+.bus-stop a:is(:hover, :focus-visible)::after { border-color: var(--accent); background: var(--accent); }
+.hero-inner:has(.bus-stop:nth-child(1) a:is(:hover, :focus-visible)) .t1,
+.hero-inner:has(.bus-stop:nth-child(2) a:is(:hover, :focus-visible)) .t2,
+.hero-inner:has(.bus-stop:nth-child(3) a:is(:hover, :focus-visible)) .t3,
+.hero-inner:has(.bus-stop:nth-child(4) a:is(:hover, :focus-visible)) .t4,
+.hero-inner:has(.bus-stop:nth-child(5) a:is(:hover, :focus-visible)) .t5 { stroke: var(--accent); }
+
+/* The join from the line to the circuit's lower-left node, drawn by
+   site.js on wide screens only (where the circuit sits beside it). */
+.bus-link { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.bus-link path { fill: none; stroke: var(--trace); stroke-width: 1.5; stroke-linejoin: round; }
+
 .hero-visual { position: relative; width: 100%; max-width: 32rem; margin-inline: auto; aspect-ratio: 520 / 440; }
 .hero-circuit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.hero-circuit .trace path { stroke: var(--trace); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.hero-circuit .trace-node circle { fill: var(--surface); stroke: var(--trace); stroke-width: 1.5; }
+.hero-circuit .trace path { stroke: var(--trace); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--dur-hover) var(--ease-in-out); }
+.hero-circuit .trace-node circle { fill: var(--surface); stroke: var(--trace); stroke-width: 1.5; transition: stroke var(--dur-hover) var(--ease-in-out); }
 .hero-logo {
   position: absolute;
   left: 50%;
@@ -522,7 +580,12 @@ main:focus { outline: none; }
   .hero-copy > :nth-child(4) { animation-delay: 210ms; }
   .hero-copy > :nth-child(5) { animation-delay: 280ms; }
   .hero-visual { animation-delay: 150ms; }
+  /* The line draws once, left to right, then the join into the circuit. */
+  .bus::before { animation: bus-draw 0.7s var(--ease-out) 0.35s both; }
+  .bus-link path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: link-draw 0.5s var(--ease-out) 1s forwards; }
 }
+@keyframes bus-draw { from { transform: scale(0, 0); } to { transform: none; } }
+@keyframes link-draw { to { stroke-dashoffset: 0; } }
 @keyframes rise {
   from { opacity: 0.01; transform: translateY(14px); }
   to { opacity: 1; transform: none; }

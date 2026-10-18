@@ -7,12 +7,14 @@
 # won't mention them" (18 Oct), so no app names or store links.
 #
 #   icon   icon-sprite symbol    title, text   card copy
-#   short  label in the hero's list
+#   short  name on the hero's circuit line
+#   line   one short line under it (hero; draft, owner to confirm)
 #   points three short lines (tick list)
 
 - icon: "smartphone"
   title: "Mobile apps"
   short: "Mobile apps"
+  line: "Phone apps, from design to release"
   text: "Apps for phones, taken from the first idea and design through building, testing and publishing on the app store."
   points:
     - "Product design and user experience"
@@ -22,6 +24,7 @@
 - icon: "gamepad"
   title: "Game development"
   short: "Games"
+  line: "Mobile games, built and published"
   text: "Mobile games, designed, built and published by our own team."
   points:
     - "Game design and art direction"
@@ -31,6 +34,7 @@
 - icon: "sparkles"
   title: "AI solutions"
   short: "AI"
+  line: "Smart features inside products"
   text: "AI features that make apps and software more useful to the people using them."
   points:
     - "AI features inside products"
@@ -40,6 +44,7 @@
 - icon: "cloud"
   title: "Cloud solutions"
   short: "Cloud"
+  line: "The back ends apps run on"
   text: "The cloud services and back ends that apps and software products run on."
   points:
     - "Back ends for apps"
@@ -49,6 +54,7 @@
 - icon: "globe"
   title: "Web development"
   short: "Web"
+  line: "Websites and web applications"
   text: "Websites, web applications and interactive interfaces."
   points:
     - "Websites and landing pages"
