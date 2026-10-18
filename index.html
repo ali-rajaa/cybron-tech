@@ -57,17 +57,16 @@ permalink: /
 <section class="hero" id="top" aria-labelledby="hero-title">
   <div class="hero-bg" aria-hidden="true">
     <div class="hero-glow hero-glow--a"></div>
-    <div class="hero-glow hero-glow--b"></div>
     <div class="hero-grid-dots"></div>
   </div>
-  <div class="wrap hero-inner">
+  <div class="wrap grid hero-inner">
     <div class="hero-copy">
       <p class="eyebrow eyebrow--dark">Software company</p>
-      <h1 id="hero-title" class="hero-title">We design, build and ship <span class="hero-accent">software products.</span></h1>
+      <h1 id="hero-title" class="hero-title">We design, build and ship software products.</h1>
       <p class="hero-lead">{{ _c.name }} makes mobile apps, games, AI and cloud solutions and web software, taking each one from first idea and design through to launch.</p>
       <div class="hero-actions">
-        <a class="btn btn--primary btn--lg" href="#services">Explore our services</a>
-        <a class="btn btn--ghost btn--lg" href="#contact">Get in touch</a>
+        <a class="btn btn--primary btn--lg" href="#contact">Get in touch<svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn--ghost btn--lg" href="#services">Explore our services</a>
       </div>
       <ul class="hero-skills" role="list" aria-label="What we build">
         {%- for s in site.data.services %}
@@ -78,8 +77,8 @@ permalink: /
 
     {%- comment -%} The logo with its circuit traces drawn out across the
     hero: right-angled traces from the disc to open nodes, the logo's own
-    motif. Light pulses run along them (site.scss "Hero"); still with
-    reduced motion. Decorative. {%- endcomment %}
+    motif. Four slow, faint pulses run outwards (site.scss "Hero"); still
+    with reduced motion. Decorative. {%- endcomment %}
     <div class="hero-visual" aria-hidden="true">
       <svg class="hero-circuit" viewBox="0 0 520 440" fill="none">
         <g class="trace">
@@ -90,8 +89,7 @@ permalink: /
           <path d="M260 112V58L280 38H332"/><path d="M260 328V382L240 402H188"/>
         </g>
         <g class="trace-pulse">
-          <path pathLength="100" d="M168 196H124L104 176H44"/><path pathLength="100" d="M164 220H16"/><path pathLength="100" d="M168 244H118L98 264H52"/>
-          <path pathLength="100" d="M352 196H396L416 176H476"/><path pathLength="100" d="M356 220H504"/><path pathLength="100" d="M352 244H402L422 264H468"/>
+          <path pathLength="100" d="M164 220H16"/><path pathLength="100" d="M356 220H504"/>
           <path pathLength="100" d="M260 112V58L280 38H332"/><path pathLength="100" d="M260 328V382L240 402H188"/>
         </g>
         <g class="trace-node">
@@ -117,10 +115,10 @@ permalink: /
       <h2 id="services-title">Software for phones, the web and the cloud</h2>
       <p class="section-sub">Five kinds of work, one team. We take products from the first sketch to launch, and keep improving them after.</p>
     </div>
-    <div class="service-grid">
+    <div class="grid service-grid">
       {%- for s in site.data.services %}
-      <article class="service-card{% if forloop.first %} service-card--lead{% endif %} reveal">
-        <span class="service-icon" aria-hidden="true"><svg class="icon"><use href="#i-{{ s.icon }}"/></svg></span>
+      <article class="card service-card{% if forloop.first %} service-card--lead{% endif %} reveal">
+        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-{{ s.icon }}"/></svg></span>
         <h3 class="service-title">{{ s.title | escape }}</h3>
         <p class="service-text">{{ s.text | escape }}</p>
         <ul class="check-list" role="list">
@@ -141,7 +139,7 @@ permalink: /
       <h2 id="approach-title">From first idea to launch, and after</h2>
       <p class="section-sub">Every product goes through the same four steps, so you always know where it stands.</p>
     </div>
-    <ol class="steps">
+    <ol class="grid steps">
       <li class="step reveal">
         <span class="step-node" aria-hidden="true"><svg class="icon"><use href="#i-search"/></svg></span>
         <p class="step-num">Step 1</p>
@@ -171,7 +169,7 @@ permalink: /
 </section>
 
 <section class="section section--light" id="about" aria-labelledby="about-title">
-  <div class="wrap about-grid">
+  <div class="wrap grid about-grid">
     <div class="about-copy reveal">
       <p class="eyebrow">About us</p>
       <h2 id="about-title">A software company built around products</h2>
@@ -197,7 +195,7 @@ permalink: /
     <h2 id="careers-title" class="careers-title">Build software with us</h2>
     <p class="careers-sub">We are always keen to hear from designers, developers and game makers. Follow {{ _c.name }} on LinkedIn to see open roles.</p>
     <div class="careers-actions">
-      <a class="btn btn--light btn--lg" href="{{ _c.linkedin_jobs }}" rel="noopener">See open roles on LinkedIn<svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></a>
+      <a class="btn btn--ghost btn--lg" href="{{ _c.linkedin_jobs }}" rel="noopener">See open roles on LinkedIn<svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></a>
     </div>
   </div>
 </section>
@@ -209,30 +207,30 @@ permalink: /
       <h2 id="contact-title">Let's build something together</h2>
       <p class="section-sub">Tell us about your project or your idea. We will get back to you.</p>
     </div>
-    <div class="contact-grid">
-      <div class="contact-card reveal">
-        <span class="contact-icon" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span>
+    <div class="grid contact-grid">
+      <div class="card contact-card reveal">
+        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span>
         <h3 class="contact-title">Email</h3>
         <p class="contact-value">{% if _c.email != "" %}<a href="mailto:{{ _c.email }}">{{ _c.email }}</a>{% else %}{% include blank.html value=_c.email %}{% endif %}</p>
       </div>
-      <div class="contact-card reveal">
-        <span class="contact-icon" aria-hidden="true"><svg class="icon"><use href="#i-message"/></svg></span>
+      <div class="card contact-card reveal">
+        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-message"/></svg></span>
         <h3 class="contact-title">Phone</h3>
         <p class="contact-value">{% if _c.phone != "" %}<a href="tel:{{ _c.phone | remove: ' ' }}">{{ _c.phone }}</a>{% else %}{% include blank.html value=_c.phone %}{% endif %}</p>
       </div>
-      <div class="contact-card reveal">
-        <span class="contact-icon" aria-hidden="true"><svg class="icon"><use href="#i-map"/></svg></span>
+      <div class="card contact-card reveal">
+        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-map"/></svg></span>
         <h3 class="contact-title">Office</h3>
         <p class="contact-value">{{ _c.area }}<br>{{ _c.city }}, {{ _c.region }}, {{ _c.country }}</p>
         {%- capture _q %}{{ _c.name }} {{ _c.area }} {{ _c.city }}{% endcapture %}
-        <a class="link-arrow" href="https://www.google.com/maps/search/?api=1&amp;query={{ _q | url_encode }}" rel="noopener">Open in Google Maps<svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <a class="link-arrow" href="https://www.google.com/maps/search/?api=1&amp;query={{ _q | url_encode }}" rel="noopener"><span class="link-text">Open in Google Maps</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
       </div>
-      <div class="contact-card reveal">
-        <span class="contact-icon" aria-hidden="true"><svg class="icon"><use href="#i-users"/></svg></span>
+      <div class="card contact-card reveal">
+        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-users"/></svg></span>
         <h3 class="contact-title">Social</h3>
         <ul class="contact-social" role="list">
           {%- for s in _c.social %}
-          <li><a class="link-arrow" href="{{ s.url }}" rel="noopener">{{ s.label | escape }}<svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></li>
+          <li><a class="link-arrow" href="{{ s.url }}" rel="noopener"><span class="link-text">{{ s.label | escape }}</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></li>
           {%- endfor %}
         </ul>
       </div>

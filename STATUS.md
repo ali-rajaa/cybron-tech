@@ -46,6 +46,40 @@ products of our own as well as for others", and the Careers line.
 The header is navy at 0.86 opacity so its grey links stay above 5:1 even
 over white sections.
 
+## 3a. Design guardrails (owner, 18 Oct)
+
+"Enterprise-grade corporate" rules, applied through the existing tokens
+(this repo is plain CSS with tokens, not Tailwind; no framework added):
+
+- **60-30-10.** Neutral grounds (white, `--bg-alt`, the logo navy);
+  structure in greys and hairlines (`--line` is 7% ink); the accent
+  (`--accent`, the logo blue) only on the primary action, focus rings and
+  the current-section marker. Eyebrows, ticks, icon wells, step nodes,
+  links and the hero traces are neutral. The logo keeps its blue.
+- **One primary action: "Get in touch"** (header, hero, phone menu, all
+  to #contact). "Explore our services" and "See open roles" are ghost
+  buttons; everything else is a text link with an underline that draws
+  in and an arrow that slides.
+- **12-column grid** (`.grid`) for every section: hero 7/5, services
+  bento 8+4 then 4/4/4 (lead card split into copy and a hairline-divided
+  list), steps 3/3/3/3, about 6 + gap + 5 (asymmetric), contact 3/3/3/3,
+  footer 5 + 6.
+- **Spacing**: sections 96 to 128px (144px on 1680px+ screens, where the
+  measure also widens to 84rem).
+- **Motion**: hover transitions 300ms ease-in-out; a staggered
+  fade-and-rise on load (starts at 0.01 opacity so it never delays the
+  largest paint); four slow, faint pulses on the hero traces (the
+  rotating rings were removed as too busy); reduced motion turns all of
+  it off.
+- **Depth**: hairline borders, soft multi-layer shadows that deepen on
+  hover.
+- **Flagged, not built** (would break "never invent facts"): case
+  studies and data visualisations need real projects and numbers from the
+  owner; a contact form needs an email address and a decision on where
+  messages go (a form service or the host), so contact stays as links
+  until then. When those exist: a minimal form (name, email, message,
+  floating labels, inline errors) and a case-study row on the grid.
+
 ## 4. Files
 
 - `index.html`: the page (sections, Organization + WebSite schema).
@@ -63,7 +97,8 @@ over white sections.
 
 ## 5. Checks (18 Oct)
 
-html-validate clean; axe zero violations at 1440 and 390; no overflow,
+Re-run after the guardrails pass (same day), all clean; plus 2560px
+screenshots. html-validate clean; axe zero violations at 1440 and 390; no overflow,
 clipping, small tap targets, text under 12px or text within 16px of the
 edge at 15 widths (320 to 1920); CLS 0; no console errors; visible focus
 rings; works without JavaScript; 17 interaction checks (phone sheet,
