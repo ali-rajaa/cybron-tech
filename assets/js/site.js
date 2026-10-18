@@ -76,6 +76,31 @@
     mark();
   }
 
+  /* ---- Copy the email address (Contact) ----
+     Hidden in the markup and shown only where the clipboard can be used,
+     so it never appears as a button that does nothing. The status line
+     announces the result to screen readers. */
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    if (!navigator.clipboard || !window.isSecureContext) return;
+    var label = btn.querySelector('.copy-text');
+    var status = document.getElementById(btn.getAttribute('aria-describedby'));
+    var timer;
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(btn.getAttribute('data-copy')).then(function () {
+        if (label) label.textContent = 'Copied';
+        if (status) status.textContent = 'Email address copied.';
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          if (label) label.textContent = 'Copy address';
+          if (status) status.textContent = '';
+        }, 2500);
+      }, function () {
+        if (status) status.textContent = 'Couldn\'t copy. Select the address above instead.';
+      });
+    });
+  });
+
   /* ---- Reveal on scroll ----
      Content is hidden only after this line runs (.reveal-ready), and only
      when IntersectionObserver exists, so it can never stay hidden. */

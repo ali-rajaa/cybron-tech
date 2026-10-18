@@ -18,6 +18,7 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 | Fact | Source |
 |---|---|
 | Company name "Cybron Technologies"; Facebook and LinkedIn pages | Owner, 18 Oct |
+| Email `info@cybrontech.com`; no phone number on the site; no contact form | Owner, 18 Oct |
 | Instagram `@cybrontechnologies` | Search, 18 Oct (owner to confirm) |
 | Bahria Town Phase 7, Rawalpindi, Punjab, Pakistan | LinkedIn company page via search (owner to confirm) |
 | Designs, develops and delivers software products, including gaming apps | LinkedIn via search |
@@ -38,13 +39,12 @@ products of our own as well as for others", and the Careers line.
 | Token | Value | Use |
 |---|---|---|
 | `--blue` | `#0072BD` | Logo, buttons, eyebrows and links on light grounds (5.1:1 on white, 4.7:1 on `--bg-alt`) |
-| `--sky` | `#4FB0F2` | Accent text on navy (7.7:1); the logo blue is only 3.6:1 there |
-| `--navy` | `#13141E` | Header, hero, careers, footer (the logo's own ground) |
-| `--on-dark-2` | `#A9B1C6` | Grey text on navy (8.5:1) |
 | `--text-2` | `#4A5468` | Grey text on light (7.6:1) |
 
-The header is navy at 0.86 opacity so its grey links stay above 5:1 even
-over white sections.
+**Light theme throughout** (owner, 18 Oct: "a light theme wide would be
+better, not dark sections"): white and `--bg-alt` alternate section by
+section; header is translucent white; Careers is a light panel; footer
+white with a hairline. No navy bands.
 
 ## 3a. Design guardrails (owner, 18 Oct)
 
@@ -78,12 +78,14 @@ over white sections.
   "WHAT WE DO", ...), no "STEP 1" labels, no icon-in-a-circle above the
   Careers heading, and the footer column headings are plain sentence
   case. Headings lead their sections on their own. Don't add them back.
+- **Contact**: one clear block, no form (owner, 18 Oct): the email set
+  large, one primary "Email us" (mailto with a subject) and a "Copy
+  address" ghost button (shown only where the clipboard works; result
+  announced), beside a details card (office with Google Maps, social,
+  careers).
 - **Flagged, not built** (would break "never invent facts"): case
   studies and data visualisations need real projects and numbers from the
-  owner; a contact form needs an email address and a decision on where
-  messages go (a form service or the host), so contact stays as links
-  until then. When those exist: a minimal form (name, email, message,
-  floating labels, inline errors) and a case-study row on the grid.
+  owner; a case-study row on the grid when they exist.
 
 ## 4. Files
 
@@ -131,7 +133,7 @@ desktop 100 / 100 / 100 (SEO 66 only because the preview is noindex).
 
 | # | Item |
 |---|---|
-| 1 | Contact email and phone/WhatsApp (shown as blanks until then) |
+| 1 | ~~Contact email~~ Done: info@cybrontech.com. No phone, no form (owner) |
 | 2 | Confirm the address (Bahria Town Phase 7, Rawalpindi) and the Instagram handle |
 | 3 | Confirm or edit the draft copy (section 2) |
 | 4 | Logo as SVG or high-res, if one exists (the redraw matches the image) |

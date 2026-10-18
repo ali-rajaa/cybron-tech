@@ -178,50 +178,50 @@ permalink: /
   </div>
 </section>
 
-<section class="careers" id="careers" aria-labelledby="careers-title">
-  <div class="careers-lines" aria-hidden="true"></div>
-  <div class="wrap careers-inner reveal">
-    <h2 id="careers-title" class="careers-title">Build software with us</h2>
-    <p class="careers-sub">We are always keen to hear from designers, developers and game makers. Follow {{ _c.name }} on LinkedIn to see open roles.</p>
-    <div class="careers-actions">
-      <a class="btn btn--ghost btn--lg" href="{{ _c.linkedin_jobs }}" rel="noopener">See open roles on LinkedIn<svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></a>
+<section class="section careers" id="careers" aria-labelledby="careers-title">
+  <div class="wrap">
+    <div class="careers-panel reveal">
+      <div class="careers-lines" aria-hidden="true"></div>
+      <h2 id="careers-title" class="careers-title">Build software with us</h2>
+      <p class="careers-sub">We are always keen to hear from designers, developers and game makers. Follow {{ _c.name }} on LinkedIn to see open roles.</p>
+      <div class="careers-actions">
+        <a class="btn btn--ghost btn--lg" href="{{ _c.linkedin_jobs }}" rel="noopener">See open roles on LinkedIn<svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="contact" aria-labelledby="contact-title">
-  <div class="wrap">
-    <div class="section-head reveal">
+<section class="section section--light" id="contact" aria-labelledby="contact-title">
+  {%- comment -%} One clear way to get in touch: the email, large, with
+  one primary button and a copy button (shown only where the clipboard
+  works). Office, social and careers sit beside it in a quiet details
+  card. No form and no phone number (owner, 18 Oct). {%- endcomment %}
+  {%- capture _q %}{{ _c.name }} {{ _c.area }} {{ _c.city }}{% endcapture %}
+  <div class="wrap grid contact-grid">
+    <div class="contact-intro reveal">
       <h2 id="contact-title">Let's build something together</h2>
-      <p class="section-sub">Tell us about your project or your idea. We will get back to you.</p>
+      <p class="section-sub">Tell us about your project or your idea, and the best way to reach you. We will get back to you.</p>
+      <a class="contact-email" href="mailto:{{ _c.email }}"><span class="link-text">{{ _c.email }}</span></a>
+      <div class="contact-actions">
+        <a class="btn btn--primary btn--lg" href="mailto:{{ _c.email }}?subject={{ 'Project enquiry' | url_encode | replace: '+', '%20' }}">Email us<svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        <button class="btn btn--ghost btn--lg" type="button" data-copy="{{ _c.email }}" aria-describedby="copy-status" hidden><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span class="copy-text">Copy address</span></button>
+      </div>
+      <p class="visually-hidden" role="status" id="copy-status"></p>
     </div>
-    <div class="grid contact-grid">
-      <div class="card contact-card reveal">
-        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span>
-        <h3 class="contact-title">Email</h3>
-        <p class="contact-value">{% if _c.email != "" %}<a href="mailto:{{ _c.email }}">{{ _c.email }}</a>{% else %}{% include blank.html value=_c.email %}{% endif %}</p>
+    <dl class="contact-details reveal">
+      <div>
+        <dt><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Office</dt>
+        <dd>{{ _c.area }}<br>{{ _c.city }}, {{ _c.region }}, {{ _c.country }}</dd>
+        <dd><a class="link-arrow" href="https://www.google.com/maps/search/?api=1&amp;query={{ _q | url_encode }}" rel="noopener"><span class="link-text">Open in Google Maps</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></dd>
       </div>
-      <div class="card contact-card reveal">
-        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-message"/></svg></span>
-        <h3 class="contact-title">Phone</h3>
-        <p class="contact-value">{% if _c.phone != "" %}<a href="tel:{{ _c.phone | remove: ' ' }}">{{ _c.phone }}</a>{% else %}{% include blank.html value=_c.phone %}{% endif %}</p>
+      <div>
+        <dt><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg>Follow us</dt>
+        <dd class="contact-links">{% for s in _c.social %}<a class="link-arrow" href="{{ s.url }}" rel="noopener"><span class="link-text">{{ s.label | escape }}</span></a>{% endfor %}</dd>
       </div>
-      <div class="card contact-card reveal">
-        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-map"/></svg></span>
-        <h3 class="contact-title">Office</h3>
-        <p class="contact-value">{{ _c.area }}<br>{{ _c.city }}, {{ _c.region }}, {{ _c.country }}</p>
-        {%- capture _q %}{{ _c.name }} {{ _c.area }} {{ _c.city }}{% endcapture %}
-        <a class="link-arrow" href="https://www.google.com/maps/search/?api=1&amp;query={{ _q | url_encode }}" rel="noopener"><span class="link-text">Open in Google Maps</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+      <div>
+        <dt><svg class="icon" aria-hidden="true"><use href="#i-briefcase"/></svg>Careers</dt>
+        <dd><a class="link-arrow" href="{{ _c.linkedin_jobs }}" rel="noopener"><span class="link-text">Open roles on LinkedIn</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></dd>
       </div>
-      <div class="card contact-card reveal">
-        <span class="well" aria-hidden="true"><svg class="icon"><use href="#i-users"/></svg></span>
-        <h3 class="contact-title">Social</h3>
-        <ul class="contact-social" role="list">
-          {%- for s in _c.social %}
-          <li><a class="link-arrow" href="{{ s.url }}" rel="noopener"><span class="link-text">{{ s.label | escape }}</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></li>
-          {%- endfor %}
-        </ul>
-      </div>
-    </div>
+    </dl>
   </div>
 </section>

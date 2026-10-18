@@ -3,8 +3,10 @@
 /* Cybron Technologies: every style on the one-page site.
 
    Design guardrails (owner, 18 Oct; STATUS.md 3):
-   - 60-30-10. 60% neutral grounds (white, cool off-white, the logo's
-     navy); 30% structure (grey text, hairline borders, quiet cards); 10%
+   - Light theme throughout (owner, 18 Oct: "a light theme wide would be
+     better, not dark sections"). No dark bands.
+   - 60-30-10. 60% neutral grounds (white and a cool off-white,
+     alternating section by section); 30% structure (grey text, hairline borders, quiet cards); 10%
      accent: the logo blue, reserved for the primary call to action
      ("Get in touch"), focus rings and the current-section marker. The
      logo itself keeps its blue. Nothing else is blue.
@@ -26,15 +28,11 @@
   /* ---- Accent (10%): the logo blue ---- */
   --accent: #0072bd;                /* 5.1:1 on white, 4.7:1 on --bg-alt */
   --accent-hover: #005a96;          /* 7.2:1 on white */
-  --accent-on-dark: #4fb0f2;        /* focus ring and current marker on navy: 7.7:1 */
 
   /* ---- Neutral grounds (60%) ---- */
   --bg: #ffffff;
   --bg-alt: #f6f8fb;
   --surface: #ffffff;
-  --navy: #13141e;                  /* the logo's ground */
-  --navy-2: #191b27;
-  --navy-3: #222536;
 
   /* ---- Structure (30%) ---- */
   --text: #0d1220;                  /* 18.7:1 */
@@ -43,14 +41,14 @@
   --line: rgba(13, 18, 32, 0.07);   /* hairline borders */
   --line-strong: rgba(13, 18, 32, 0.14);
   --well: #eef1f6;                  /* icon wells */
-  --on-dark: #ffffff;
-  --on-dark-2: #a9b1c6;             /* 8.5:1 on navy */
-  --on-dark-3: #8d96ad;             /* 6.2:1 on navy */
-  --line-dark: rgba(255, 255, 255, 0.08);
-  --line-dark-strong: rgba(255, 255, 255, 0.16);
-  --trace: #2c3247;                 /* circuit lines on navy */
-  --trace-glow: rgba(169, 177, 198, 0.55);
-  --brand-haze: rgba(0, 114, 189, 0.16);   /* the faint light behind the logo */
+  --on-accent: #ffffff;             /* text on the accent button: 5.1:1 */
+  --trace: #d9dee7;                 /* circuit lines around the logo */
+  --trace-pulse: rgba(95, 105, 125, 0.45);
+  --dots: rgba(13, 18, 32, 0.07);
+  --glass: rgba(255, 255, 255, 0.82);       /* header material */
+  --glass-strong: rgba(255, 255, 255, 0.92);
+  --scrim: rgba(13, 18, 32, 0.28);
+  --brand-haze: rgba(0, 114, 189, 0.08);    /* the faint light behind the logo */
   --blank-fill: rgba(255, 170, 60, 0.2);
   --blank-line: #a35a00;
 
@@ -113,9 +111,6 @@
     --text-3: #434c5f;
     --line: rgba(13, 18, 32, 0.28);
     --line-strong: rgba(13, 18, 32, 0.45);
-    --on-dark-2: #c6ccdb;
-    --on-dark-3: #b3bacb;
-    --line-dark: rgba(255, 255, 255, 0.3);
   }
 }
 
@@ -162,7 +157,6 @@ button { font: inherit; color: inherit; letter-spacing: inherit; }
 a, button, summary, label { touch-action: manipulation; }
 main:focus { outline: none; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-.site-header :focus-visible, .hero :focus-visible, .careers :focus-visible, .site-footer :focus-visible, .glance :focus-visible { outline-color: var(--accent-on-dark); }
 
 .skip-link {
   position: absolute;
@@ -172,7 +166,7 @@ main:focus { outline: none; }
   padding: 0.75rem 1rem;
   border-radius: var(--radius-sm);
   background: var(--accent);
-  color: var(--on-dark);
+  color: var(--on-accent);
   font-weight: 600;
   text-decoration: none;
 }
@@ -258,17 +252,17 @@ main:focus { outline: none; }
 .btn-arrow { transition: transform var(--dur-hover) var(--ease-spring); }
 .btn--primary {
   background: var(--accent);
-  color: var(--on-dark);
+  color: var(--on-accent);
   box-shadow: var(--shadow-xs), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
-/* Ghost on navy (header, hero, careers). */
-.btn--ghost { border-color: var(--line-dark-strong); color: var(--on-dark); background: transparent; }
+/* Ghost: a crisp hairline border on a light ground. */
+.btn--ghost { border-color: var(--line-strong); color: var(--text); background: var(--surface); }
 .btn--sm { min-height: 2.5rem; padding: 0.5rem 1rem; font-size: 0.875rem; letter-spacing: var(--track-small); }
 .btn--sm::after { content: ""; position: absolute; inset: -2px; }
 .btn--lg { min-height: 3.125rem; padding: 0.8125rem 1.5rem; font-size: 1rem; }
 @media (hover: hover) {
   .btn--primary:hover { background: var(--accent-hover); }
-  .btn--ghost:hover { border-color: rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.05); }
+  .btn--ghost:hover { border-color: var(--text-3); background: var(--bg-alt); }
   .btn:hover .btn-arrow { transform: translateX(4px); }
 }
 .btn:active, .nav-toggle:active {
@@ -307,21 +301,21 @@ main:focus { outline: none; }
 .check-list .icon { width: 1rem; height: 1rem; margin-top: 0.3rem; color: var(--text-3); stroke-width: 2.25; }
 
 /* ---------- Header ----------
-   A translucent navy layer over the page. 0.86 opacity keeps the grey
-   links above 5:1 even over the white sections. */
+   A translucent white layer over the page; once scrolled, a hairline
+   marks where content meets it. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  color: var(--on-dark);
-  background: rgba(19, 20, 30, 0.86);
-  -webkit-backdrop-filter: saturate(160%) blur(20px);
-  backdrop-filter: saturate(160%) blur(20px);
+  color: var(--text);
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
   box-shadow: inset 0 -1px 0 transparent;
   transition: box-shadow var(--dur-hover) ease, background-color var(--dur-hover) ease;
 }
-.site-header.is-scrolled { background: rgba(19, 20, 30, 0.9); box-shadow: inset 0 -1px 0 var(--line-dark); }
-.site-header.nav-open { background: var(--navy); }
+.site-header.is-scrolled { background: var(--glass-strong); box-shadow: inset 0 -1px 0 var(--line); }
+.site-header.nav-open { background: var(--surface); }
 .header-bar { display: flex; align-items: center; gap: 2.5rem; min-height: var(--header-h); }
 .brand {
   display: inline-flex;
@@ -334,7 +328,7 @@ main:focus { outline: none; }
 }
 .brand-mark { width: 2rem; height: 2rem; }
 .brand-name { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; }
-.brand-sub { font-weight: 400; color: var(--on-dark-2); }
+.brand-sub { font-weight: 400; color: var(--text-2); }
 
 .nav-list { display: flex; align-items: center; gap: 0.25rem; }
 .nav-link {
@@ -344,7 +338,7 @@ main:focus { outline: none; }
   min-height: 2.75rem;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-sm);
-  color: var(--on-dark-2);
+  color: var(--text-2);
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: var(--track-small);
@@ -361,15 +355,15 @@ main:focus { outline: none; }
   right: 0.75rem;
   bottom: 0.375rem;
   height: 1px;
-  background: var(--accent-on-dark);
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--dur-hover) var(--ease-spring);
 }
-.nav-link[aria-current="true"] { color: var(--on-dark); }
+.nav-link[aria-current="true"] { color: var(--text); }
 .nav-link[aria-current="true"]::after { transform: scaleX(1); }
 @media (hover: hover) {
-  .nav-link:hover { color: var(--on-dark); }
+  .nav-link:hover { color: var(--text); }
 }
 .header-actions { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
 .nav-toggle {
@@ -381,7 +375,7 @@ main:focus { outline: none; }
   border: 0;
   border-radius: var(--radius-sm);
   background: none;
-  color: var(--on-dark);
+  color: var(--text);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition: transform var(--dur-spring-fast) var(--ease-spring);
@@ -395,7 +389,7 @@ main:focus { outline: none; }
   position: fixed;
   inset: 0;
   z-index: 40;
-  background: rgba(8, 9, 14, 0.5);
+  background: var(--scrim);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--dur-exit) ease;
@@ -422,9 +416,9 @@ main:focus { outline: none; }
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: 0.5rem var(--gutter) 1.5rem;
-    background: var(--navy);
-    border-bottom: 1px solid var(--line-dark);
-    box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.5);
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow-lg);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-0.75rem);
@@ -437,8 +431,8 @@ main:focus { outline: none; }
     transition: opacity 0.24s ease, transform var(--dur-spring-fast) var(--ease-spring), visibility 0s;
   }
   .js .nav-list { flex-direction: column; align-items: stretch; gap: 0; }
-  .js .nav-list li { border-bottom: 1px solid var(--line-dark); }
-  .js .nav-link { width: 100%; min-height: 3.25rem; padding-inline: 0.25rem; border-radius: 0; color: var(--on-dark); font-size: 1.0625rem; }
+  .js .nav-list li { border-bottom: 1px solid var(--line); }
+  .js .nav-link { width: 100%; min-height: 3.25rem; padding-inline: 0.25rem; border-radius: 0; color: var(--text); font-size: 1.0625rem; }
   .js .nav-link::after { left: 0.25rem; right: auto; width: 1.5rem; bottom: 0.75rem; }
   .js .nav-sheet-cta { display: flex; width: 100%; margin-top: 1.5rem; }
   .js .nav-open ~ .nav-scrim { opacity: 1; pointer-events: auto; transition-duration: 0.24s; }
@@ -449,9 +443,8 @@ main:focus { outline: none; }
 }
 
 /* ---------- Hero ----------
-   The logo's navy, one faint haze behind the logo, a dot field, and the
-   logo with its circuit traces in neutral slate. Copy on 7 columns,
-   visual on 5. */
+   White, a faint dot field, one soft haze behind the logo, and the logo
+   with its circuit traces in light grey. Copy on 7 columns, visual on 5. */
 .hero {
   position: relative;
   overflow: clip;
@@ -459,8 +452,8 @@ main:focus { outline: none; }
   margin-top: calc(var(--header-h) * -1);
   padding-top: calc(var(--header-h) + clamp(4rem, 9vw, 7rem));
   padding-bottom: clamp(5rem, 10vw, 8rem);
-  background: var(--navy);
-  color: var(--on-dark);
+  background: linear-gradient(180deg, var(--bg-alt), var(--bg) 70%);
+  color: var(--text);
 }
 .hero-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .hero-glow { position: absolute; border-radius: 50%; }
@@ -475,7 +468,7 @@ main:focus { outline: none; }
 .hero-grid-dots {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1.3px);
+  background-image: radial-gradient(circle, var(--dots) 1px, transparent 1.3px);
   background-size: 28px 28px;
   -webkit-mask-image: radial-gradient(ellipse 60% 70% at 70% 50%, #000 10%, transparent 70%);
   mask-image: radial-gradient(ellipse 60% 70% at 70% 50%, #000 10%, transparent 70%);
@@ -495,7 +488,7 @@ main:focus { outline: none; }
 .hero-lead {
   max-width: 34rem;
   margin-top: 1.5rem;
-  color: var(--on-dark-2);
+  color: var(--text-2);
   font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
   line-height: 1.6;
   text-wrap: pretty;
@@ -508,14 +501,14 @@ main:focus { outline: none; }
   max-width: 34rem;
   margin-top: 3.5rem;
   padding-top: 1.75rem;
-  border-top: 1px solid var(--line-dark);
-  color: var(--on-dark-2);
+  border-top: 1px solid var(--line);
+  color: var(--text-2);
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: var(--track-small);
 }
 .hero-skills li { display: inline-flex; align-items: center; gap: 0.5rem; }
-.hero-skills .icon { color: var(--on-dark-3); width: 1rem; height: 1rem; }
+.hero-skills .icon { color: var(--text-3); width: 1rem; height: 1rem; }
 @media (max-width: 479.98px) {
   .hero-actions .btn { width: 100%; }
 }
@@ -523,16 +516,16 @@ main:focus { outline: none; }
 .hero-visual { position: relative; width: 100%; max-width: 32rem; margin-inline: auto; aspect-ratio: 520 / 440; }
 .hero-circuit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .hero-circuit .trace path { stroke: var(--trace); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.hero-circuit .trace-node circle { fill: var(--navy); stroke: var(--trace); stroke-width: 1.5; }
+.hero-circuit .trace-node circle { fill: var(--surface); stroke: var(--trace); stroke-width: 1.5; }
 .hero-circuit .trace-pulse path {
-  stroke: var(--trace-glow);
+  stroke: var(--trace-pulse);
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-dasharray: 10 90;
   stroke-dashoffset: 100;
   opacity: 0;
 }
-.hero-orbit { fill: none; stroke: var(--line-dark); stroke-width: 1; stroke-dasharray: 2 8; }
+.hero-orbit { fill: none; stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 2 8; }
 .hero-orbit--outer { stroke-dasharray: 1 12; opacity: 0.6; }
 .hero-logo-glow {
   position: absolute;
@@ -553,7 +546,7 @@ main:focus { outline: none; }
   height: auto;
   aspect-ratio: 1;
   translate: -50% -50%;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 18px 36px rgba(0, 60, 110, 0.22));
 }
 
 /* Load: the hero copy and visual rise and fade in, staggered. Starts at
@@ -705,14 +698,15 @@ main:focus { outline: none; }
 .glance {
   padding: clamp(1.75rem, 4vw, 2.5rem);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--navy-3), var(--navy) 60%);
-  color: var(--on-dark);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-md);
 }
 .glance-list { margin: 0; }
-.glance-list > div { padding-block: 1.125rem; border-top: 1px solid var(--line-dark); }
+.glance-list > div { padding-block: 1.125rem; border-top: 1px solid var(--line); }
 .glance-list > div:first-child { border-top: 0; padding-top: 0.25rem; }
-.glance-list dt { display: flex; align-items: center; gap: 0.5rem; color: var(--on-dark-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--track-small); }
+.glance-list dt { display: flex; align-items: center; gap: 0.5rem; color: var(--text-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--track-small); }
 .glance-list dt .icon { width: 1rem; height: 1rem; }
 .glance-list dd { margin-top: 0.375rem; font-size: 1.0625rem; font-weight: 500; line-height: 1.5; }
 .glance-links { display: flex; flex-wrap: wrap; gap: 0 1.5rem; }
@@ -720,22 +714,24 @@ main:focus { outline: none; }
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--on-dark);
-  text-decoration-color: var(--line-dark-strong);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration-color: var(--line-strong);
   transition: text-decoration-color var(--dur-hover) var(--ease-in-out);
 }
 @media (hover: hover) {
   .glance-links a:hover { text-decoration-color: currentColor; }
 }
 
-/* ---------- Careers: a navy band ---------- */
-.careers {
+/* ---------- Careers: a light panel with faint grid lines ---------- */
+.careers-panel {
   position: relative;
-  overflow: clip;
+  overflow: hidden;
   isolation: isolate;
-  padding-block: var(--space-section);
-  background: var(--navy);
-  color: var(--on-dark);
+  padding: clamp(3.5rem, 8vw, 6rem) clamp(1.5rem, 6vw, 4rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-alt);
   text-align: center;
 }
 .careers-lines {
@@ -743,57 +739,98 @@ main:focus { outline: none; }
   inset: 0;
   z-index: -1;
   background:
-    repeating-linear-gradient(90deg, transparent 0 95px, var(--line-dark) 95px 96px),
-    repeating-linear-gradient(0deg, transparent 0 95px, var(--line-dark) 95px 96px);
-  -webkit-mask-image: radial-gradient(ellipse 55% 75% at 50% 50%, #000 20%, transparent 80%);
-  mask-image: radial-gradient(ellipse 55% 75% at 50% 50%, #000 20%, transparent 80%);
-  opacity: 0.6;
+    repeating-linear-gradient(90deg, transparent 0 63px, var(--line) 63px 64px),
+    repeating-linear-gradient(0deg, transparent 0 63px, var(--line) 63px 64px);
+  -webkit-mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, #000 15%, transparent 80%);
+  mask-image: radial-gradient(ellipse 60% 80% at 50% 50%, #000 15%, transparent 80%);
 }
-.careers-inner { max-width: 42rem; }
+.careers-panel > :not(.careers-lines) { max-width: 40rem; margin-inline: auto; }
 .careers-title {
   font-size: clamp(2.25rem, 1.5rem + 3.2vw, 3.75rem);
   font-weight: 700;
   line-height: var(--leading-tight);
   letter-spacing: var(--track-display);
 }
-.careers-sub { margin-top: 1.25rem; color: var(--on-dark-2); font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); line-height: var(--leading-relaxed); text-wrap: pretty; }
+.careers-sub { margin-top: 1.25rem; color: var(--text-2); font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); line-height: var(--leading-relaxed); text-wrap: pretty; }
 .careers-actions { display: flex; justify-content: center; margin-top: 2.5rem; }
 @media (max-width: 479.98px) {
   .careers-actions .btn { width: 100%; white-space: normal; }
 }
 
-/* ---------- Contact: four cards, 3 columns each ---------- */
-@media (min-width: 640px) { .contact-grid > * { grid-column: span 6; } }
-@media (min-width: 1024px) { .contact-grid > * { grid-column: span 3; } }
-.contact-card { display: flex; flex-direction: column; }
-.contact-title { margin-top: 1.25rem; font-size: 1.0625rem; font-weight: 650; }
-.contact-value { margin-top: 0.5rem; color: var(--text-2); line-height: 1.6; overflow-wrap: anywhere; }
-.contact-value a { color: var(--text); font-weight: 600; }
-.contact-card > .link-arrow { margin-top: auto; padding-top: 1rem; }
-.contact-social { margin-top: 0.25rem; }
+/* ---------- Contact ----------
+   One clear way in: copy on 6 columns with the email set large, a quiet
+   details card on 5 (with a gap column between). */
+.contact-grid { align-items: start; row-gap: 3rem; }
+@media (min-width: 1024px) {
+  .contact-intro { grid-column: 1 / span 6; }
+  .contact-details { grid-column: 8 / span 5; }
+}
+.contact-intro h2 {
+  font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: var(--track-title);
+}
+.contact-email {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: 2.25rem;
+  color: var(--text);
+  font-size: clamp(1.625rem, 1rem + 2.4vw, 2.5rem);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: var(--track-title-2);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.contact-email .link-text { background-size: 100% 1px; background-image: linear-gradient(var(--line-strong), var(--line-strong)); padding-bottom: 0.15em; }
+@media (hover: hover) {
+  .contact-email:hover .link-text { background-image: linear-gradient(currentColor, currentColor); }
+}
+.contact-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+@media (max-width: 479.98px) {
+  .contact-actions .btn { width: 100%; }
+}
+.contact-details {
+  margin: 0;
+  padding: clamp(1.75rem, 3vw, 2.25rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.contact-details > div { padding-block: 1.25rem; border-top: 1px solid var(--line); }
+.contact-details > div:first-child { padding-top: 0; border-top: 0; }
+.contact-details > div:last-child { padding-bottom: 0; }
+.contact-details dt { display: flex; align-items: center; gap: 0.5rem; color: var(--text-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--track-small); }
+.contact-details dt .icon { width: 1rem; height: 1rem; }
+.contact-details dd { margin-top: 0.5rem; color: var(--text); font-size: 1rem; line-height: 1.6; }
+.contact-details dd + dd { margin-top: 0.125rem; }
+.contact-links { display: flex; flex-wrap: wrap; gap: 0 1.5rem; }
 
 /* ---------- Footer ---------- */
-.site-footer { padding-top: clamp(4rem, 7vw, 5.5rem); background: var(--navy); color: var(--on-dark); }
+.site-footer { padding-top: clamp(4rem, 7vw, 5.5rem); border-top: 1px solid var(--line); background: var(--bg); color: var(--text); }
 .footer-grid { row-gap: 3rem; }
 @media (min-width: 1024px) {
   .footer-brand { grid-column: 1 / span 5; }
   .footer-cols { grid-column: 7 / span 6; }
 }
-.footer-line { max-width: 22rem; margin-top: 1rem; color: var(--on-dark-2); font-size: 0.9375rem; line-height: 1.6; }
+.footer-line { max-width: 22rem; margin-top: 1rem; color: var(--text-2); font-size: 0.9375rem; line-height: 1.6; }
 .footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem var(--grid-gap); }
-.footer-head { color: var(--on-dark); font-size: 0.875rem; font-weight: 600; letter-spacing: var(--track-small); }
+.footer-head { color: var(--text); font-size: 0.875rem; font-weight: 600; letter-spacing: var(--track-small); }
 .footer-col ul { margin-top: 0.75rem; }
 .footer-col a {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--on-dark-2);
+  color: var(--text-2);
   font-size: 0.9375rem;
   text-decoration: none;
   transition: color var(--dur-hover) var(--ease-in-out);
 }
 @media (hover: hover) {
-  .footer-col a:hover { color: var(--on-dark); }
+  .footer-col a:hover { color: var(--text); }
 }
 .footer-bottom {
   display: flex;
@@ -802,8 +839,8 @@ main:focus { outline: none; }
   gap: 0.5rem 1.5rem;
   margin-top: 4rem;
   padding-block: 1.75rem;
-  border-top: 1px solid var(--line-dark);
-  color: var(--on-dark-3);
+  border-top: 1px solid var(--line);
+  color: var(--text-3);
   font-size: 0.8125rem;
   letter-spacing: var(--track-small);
 }
@@ -842,9 +879,9 @@ main:focus { outline: none; }
   .card:hover { transform: none; }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-  .site-header, .site-header.is-scrolled { background: var(--navy); box-shadow: inset 0 -1px 0 var(--line-dark); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .site-header, .site-header.is-scrolled { background: var(--surface); box-shadow: inset 0 -1px 0 var(--line-strong); -webkit-backdrop-filter: none; backdrop-filter: none; }
   .hero-grid-dots, .careers-lines { display: none; }
 }
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .site-header, .site-header.is-scrolled { background: var(--navy); }
+  .site-header, .site-header.is-scrolled { background: var(--surface); }
 }

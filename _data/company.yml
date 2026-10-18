@@ -13,9 +13,8 @@ region: "Punjab"
 country: "Pakistan"
 country_code: "PK"
 
-# Not supplied yet (owner).
-email: ""
-phone: ""
+# Owner, 18 Oct. No phone number on the site (owner, 18 Oct).
+email: "info@cybrontech.com"
 
 # Owner, 18 Oct (Facebook, LinkedIn); Instagram found by search
 # (@cybrontechnologies). Shown as words, never as the networks' logos.
