@@ -18,9 +18,10 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 | Fact | Source |
 |---|---|
 | Company name "Cybron Technologies"; Facebook and LinkedIn pages | Owner, 18 Oct |
+| "Cybron Technologies" is a trademark: footer reads "© year Cybron Technologies™. All rights reserved." (™, not ®, until the owner confirms it's registered) | Owner, 18 Oct |
 | Email `info@cybrontech.com`; no phone number on the site; no contact form | Owner, 18 Oct |
 | Instagram `@cybrontechnologies` | Search, 18 Oct (owner to confirm) |
-| Office in Rawalpindi, Punjab, Pakistan | Owner, 18 Oct: the office is real, in "Bin Chargh Heights" (spelling unconfirmed; nothing found online). The site shows the city only until the owner sends the exact address (`area` in `_data/company.yml`). The LinkedIn "Bahria Town Phase 7" is wrong and is not used |
+| Office: **Bin Charigh Heights, Rawalpindi, Pakistan** | Owner, 18 Oct, with the full address (1st Floor, Bin Charigh Heights, Bahria Town Phase 7, Sector 1 Bahria Greens, Rawalpindi 46220). The owner asked for only "Bin Charigh Heights, Rawalpindi, Pakistan" on the site (footer, About, Contact; schema streetAddress and city) |
 | Designs, develops and delivers software products, including gaming apps | LinkedIn via search |
 | Mobile, AI and cloud solutions | Instagram bio via search |
 | Web development, online applications, interactive interfaces | ZoomInfo via search |
@@ -141,7 +142,7 @@ desktop 100 / 100 / 100 (SEO 66 only because the preview is noindex).
 | # | Item |
 |---|---|
 | 1 | ~~Contact email~~ Done: info@cybrontech.com. No phone, no form (owner) |
-| 2 | Send the exact office address ("Bin Chargh Heights": spelling, building and street) and confirm the Instagram handle |
+| 2 | ~~Office address~~ Done: Bin Charigh Heights, Rawalpindi, Pakistan. Still to confirm: the Instagram handle |
 | 3 | Confirm or edit the draft copy (section 2) |
 | 4 | Logo as SVG or high-res, if one exists (the redraw matches the image) |
 | 5 | Where cybrontech.com is hosted, for the live move |

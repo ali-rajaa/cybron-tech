@@ -109,7 +109,7 @@ permalink: /
     </div>
     <div class="service-list">
       {%- for s in site.data.services %}
-      <article class="service-row reveal">
+      <article class="service-row reveal" id="service-{{ s.short | slugify }}">
         <h3 class="service-title"><svg class="icon" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg>{{ s.title | escape }}</h3>
         <div class="service-body">
           <p class="service-text">{{ s.text | escape }}</p>
@@ -207,7 +207,7 @@ permalink: /
     <dl class="contact-details reveal">
       <div>
         <dt><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Office</dt>
-        <dd>{% if _c.area != "" %}{{ _c.area }}<br>{% endif %}{{ _c.city }}, {{ _c.region }}, {{ _c.country }}</dd>
+        <dd>{% if _c.area != "" %}{{ _c.area }}, {% endif %}{{ _c.city }}, {{ _c.country }}</dd>
         <dd><a class="link-arrow" href="https://www.google.com/maps/search/?api=1&amp;query={{ _q | url_encode }}" rel="noopener"><span class="link-text">Open in Google Maps</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></dd>
       </div>
       <div>

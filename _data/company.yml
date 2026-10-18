@@ -6,11 +6,11 @@
 name: "Cybron Technologies"
 short: "Cybron"
 
-# Street address: owner says the office is in a building he named as
-# "Bin Chargh Heights" (18 Oct); not found anywhere to confirm the
-# spelling or street, so it stays empty (and isn't shown) until the owner
-# sends the exact address. The LinkedIn "Bahria Town Phase 7" was wrong.
-area: ""
+# Office: the owner sent the full address (18 Oct) and asked for exactly
+# "Bin Charigh Heights, Rawalpindi, Pakistan" on the site: building, city,
+# country. No floor, sector, postcode or province (region is kept for the
+# schema only).
+area: "Bin Charigh Heights"
 city: "Rawalpindi"
 region: "Punjab"
 country: "Pakistan"

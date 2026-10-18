@@ -1,6 +1,9 @@
 {%- comment -%}
-  Footer: logo and one line, the section links, the social links (as
-  words, never the networks' logos) and the copyright.
+  Footer: the brand block (logo, what the company does, email and city),
+  three link columns (services, company, social, as words, never the
+  networks' logos) and a bottom bar with the copyright, the trademark
+  notice (owner, 18 Oct: "Cybron Technologies" is trademarked; shown with
+  ™, since ® is for registered marks only) and a link back to the top.
 {%- endcomment -%}
 {%- assign _home = '/' | relative_url -%}
 {%- assign _c = site.data.company -%}
@@ -11,22 +14,27 @@
         {% include logo.html variant="full" class="brand-mark" %}
         <span class="brand-name">{{ _c.short }}<span class="brand-sub"> Technologies</span></span>
       </a>
-      <p class="footer-line">Software, apps and games, from first idea to launch.</p>
+      <p class="footer-line">A software company that designs, builds and ships mobile apps, games, AI, cloud and web products, from the first idea to launch and every update after.</p>
+      <ul class="footer-facts" role="list">
+        <li><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:{{ _c.email }}">{{ _c.email }}</a></li>
+        <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>{% if _c.area != "" %}{{ _c.area }}, {% endif %}{{ _c.city }}, {{ _c.country }}</span></li>
+      </ul>
     </div>
     <nav class="footer-cols" aria-label="Footer">
       <div class="footer-col">
-        <h2 class="footer-head">On this page</h2>
+        <h2 class="footer-head">Services</h2>
         <ul role="list">
-          {%- for s in site.data.sections %}
-          <li><a href="{{ _home }}#{{ s.id }}">{{ s.label | escape }}</a></li>
+          {%- for s in site.data.services %}
+          <li><a href="{{ _home }}#service-{{ s.short | slugify }}">{{ s.title | escape }}</a></li>
           {%- endfor %}
         </ul>
       </div>
       <div class="footer-col">
-        <h2 class="footer-head">Contact</h2>
+        <h2 class="footer-head">Company</h2>
         <ul role="list">
-          <li><a href="mailto:{{ _c.email }}">{{ _c.email }}</a></li>
-          <li><a href="{{ _home }}#contact">Get in touch</a></li>
+          {%- for s in site.data.sections %}{% unless s.id == "services" %}
+          <li><a href="{{ _home }}#{{ s.id }}">{{ s.label | escape }}</a></li>
+          {%- endunless %}{% endfor %}
         </ul>
       </div>
       <div class="footer-col">
@@ -41,8 +49,8 @@
   </div>
   <div class="wrap">
     <div class="footer-bottom">
-      <p>&copy; {{ site.time | date: "%Y" }} {{ _c.name }}</p>
-      <p>{{ _c.city }}, {{ _c.region }}, {{ _c.country }}</p>
+      <p>&copy; {{ site.time | date: "%Y" }} {{ _c.name }}&trade;. All rights reserved.</p>
+      <a class="footer-top" href="#top">Back to top<svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
     </div>
   </div>
 </footer>
