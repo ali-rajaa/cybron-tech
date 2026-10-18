@@ -48,6 +48,7 @@
   --well: #eef1f6;                  /* icon wells */
   --on-accent: #ffffff;             /* text on the accent button: 5.1:1 */
   --trace: #d9dee7;                 /* circuit lines around the logo */
+  --node: #8a94a6;                  /* hero service nodes: 3:1 on white */
   --glass: rgba(255, 255, 255, 0.82);       /* header material */
   --glass-strong: rgba(255, 255, 255, 0.92);
   --scrim: rgba(13, 18, 32, 0.28);
@@ -453,8 +454,8 @@ main:focus { outline: none; }
 .hero {
   position: relative;
   margin-top: calc(var(--header-h) * -1);
-  padding-top: calc(var(--header-h) + clamp(3.5rem, 7vw, 5.5rem));
-  padding-bottom: clamp(5rem, 10vw, 8rem);
+  padding-top: calc(var(--header-h) + clamp(2.5rem, min(7vw, 9vh), 5.5rem));
+  padding-bottom: clamp(4rem, min(10vw, 12vh), 8rem);
   border-bottom: 1px solid var(--line);
   background: var(--bg);
   color: var(--text);
@@ -465,40 +466,56 @@ main:focus { outline: none; }
   .hero-visual { grid-column: 8 / span 5; }
 }
 .hero-inner { position: relative; }
-/* Two weights, one size: what we make (bold, ink), then how (regular,
-   grey). The contrast carries the heading; no decoration. */
+/* What we make (bold, ink), then how (regular, grey, about 70%): weight
+   and size contrast carry the heading. Sized by width and by height, so
+   on short laptop screens (1366x768, 1536x864) the whole hero, services
+   included, fits the first screen; the first line stays on one line
+   beside the circuit. */
 .hero-title {
-  font-size: clamp(2.375rem, 1.3rem + 3vw, 3.875rem);
+  font-size: clamp(2.375rem, min(4vw, 8.5vh), 3.4375rem);
   font-weight: 700;
   line-height: 1.04;
   letter-spacing: var(--track-display);
   text-wrap: balance;
 }
+/* The first line needs about 12.4x its size; the copy column is 699px
+   up to 1679px wide and 772px from 1680px. */
+@media (min-width: 1680px) {
+  .hero-title { font-size: clamp(2.375rem, min(4vw, 8.5vh), 3.75rem); }
+}
 .hero-title-a, .hero-title-b { display: block; }
-.hero-title-b { font-weight: 400; color: var(--text-2); }
+.hero-title-b {
+  margin-top: 0.2em;
+  color: var(--text-2);
+  font-size: 0.7em;
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: var(--track-title);
+}
 .hero-lead {
   max-width: 34rem;
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
   color: var(--text-2);
   font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
   line-height: 1.6;
   text-wrap: pretty;
 }
-.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2.25rem; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: clamp(1.5rem, 4vh, 2.25rem); }
 @media (max-width: 479.98px) {
   .hero-actions .btn { width: 100%; }
 }
 
-/* The circuit line: one hairline under the actions, a short drop and an
-   open node per service (the logo's own trace-and-node), the name and
-   one line beneath. Stacks into a vertical line on phones. */
-.bus { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); margin-top: 3rem; }
+/* The circuit line: one hairline with a solid node on it per service
+   (the logo's solder points), the name and one line beneath. Names only,
+   on a vertical line, on phones (the Services section follows). Nodes
+   are --node (3:1 on white): they mark links. */
+.bus { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); margin-top: clamp(1.75rem, 5vh, 3rem); }
 .bus::before {
   content: "";
   position: absolute;
-  top: 1.35rem;
-  bottom: 1.35rem;
-  left: calc(0.40625rem - 0.75px);
+  top: 1.375rem;
+  bottom: 1.375rem;
+  left: calc(0.28125rem - 0.75px);
   width: 1.5px;
   background: var(--trace);
   transform-origin: top;
@@ -506,46 +523,38 @@ main:focus { outline: none; }
 .bus-stop a {
   position: relative;
   display: grid;
-  gap: 0.2rem;
+  align-content: center;
+  gap: 0.25rem;
   min-height: 2.75rem;
-  padding: 0.625rem 0 0.625rem 2rem;
+  padding-left: 1.75rem;
   color: var(--text);
   text-decoration: none;
 }
 .bus-stop a::after {
   content: "";
   position: absolute;
-  top: 0.95rem;
+  top: calc(50% - 0.28125rem);
   left: 0;
-  width: 0.8125rem;
-  height: 0.8125rem;
-  border: 1.5px solid var(--trace);
+  width: 0.5625rem;
+  height: 0.5625rem;
   border-radius: 50%;
-  background: var(--surface);
-  transition: border-color var(--dur-hover) var(--ease-in-out), background-color var(--dur-hover) var(--ease-in-out);
+  background: var(--node);
+  box-shadow: 0 0 0 3px var(--bg);
+  transition: background-color var(--dur-hover) var(--ease-in-out);
 }
-.bus-name { font-size: 1rem; font-weight: 600; letter-spacing: var(--track-small); }
-.bus-line { color: var(--text-2); font-size: 0.875rem; line-height: 1.45; }
+.bus-name { font-size: 1rem; font-weight: 600; letter-spacing: var(--track-small); transition: color var(--dur-hover) var(--ease-in-out); }
+.bus-line { display: none; color: var(--text-2); font-size: 0.875rem; line-height: 1.45; }
 @media (min-width: 640px) {
-  .bus { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 3.5rem; }
-  .bus::before { top: 0; bottom: auto; left: calc(0.40625rem - 0.75px); right: 0; width: auto; height: 1.5px; transform-origin: left; }
-  .bus-stop a { padding: 2.5rem 1rem 0 0; }
-  .bus-stop a::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: calc(0.40625rem - 0.75px);
-    width: 1.5px;
-    height: 0.875rem;
-    background: var(--trace);
-    transition: background-color var(--dur-hover) var(--ease-in-out);
-  }
-  .bus-stop a::after { top: 0.875rem; }
+  .bus { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .bus::before { top: 0; bottom: auto; left: 0.28125rem; right: 0; width: auto; height: 1.5px; transform-origin: left; }
+  .bus-stop a { align-content: start; padding: 1.25rem 1rem 0 0; }
+  .bus-stop a::after { top: calc(0.75px - 0.28125rem); }
+  .bus-line { display: block; }
 }
-/* Hover or focus a service: its drop and node, and its trace in the
+/* Hover or focus a service: its node and name, and its trace in the
    circuit, turn blue. Colour only; nothing moves. */
-.bus-stop a:is(:hover, :focus-visible)::before { background: var(--accent); }
-.bus-stop a:is(:hover, :focus-visible)::after { border-color: var(--accent); background: var(--accent); }
+.bus-stop a:is(:hover, :focus-visible)::after { background: var(--accent); }
+.bus-stop a:is(:hover, :focus-visible) .bus-name { color: var(--accent); }
 .hero-inner:has(.bus-stop:nth-child(1) a:is(:hover, :focus-visible)) .t1,
 .hero-inner:has(.bus-stop:nth-child(2) a:is(:hover, :focus-visible)) .t2,
 .hero-inner:has(.bus-stop:nth-child(3) a:is(:hover, :focus-visible)) .t3,

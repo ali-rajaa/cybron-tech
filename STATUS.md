@@ -61,8 +61,7 @@ white with a hairline. No navy bands.
   the current-section marker. Icons, step nodes,
   links and the hero traces are neutral. The logo keeps its blue.
 - **One primary action: "Get in touch"** (header, hero, phone menu, all
-  to #contact). "Explore our services" and "See open roles" are ghost
-  buttons; everything else is a text link with an underline that draws
+  to #contact). "See open roles" is a ghost button; everything else is a text link with an underline that draws
   in and an arrow that slides.
 - **12-column grid** (`.grid`) for every section: hero 7/5, services
   an editorial list (sticky heading 4, list 7), steps 3/3/3/3, about
@@ -89,15 +88,18 @@ white with a hairline. No navy bands.
   (the hero is left-aligned on the 7/5 grid); no floating blurred
   shapes; a structured header and footer. Lean on editorial structure,
   type weight contrast and white space. Don't add any of these back.
-- **Hero** (owner, 18 Oct, "the circuit runs through the page"): the
-  heading in two weights at one size ("Apps, games and software." bold
-  ink, "Designed, built and shipped in-house." regular grey); one button
-  plus a text link; a circuit line under them with a drop and open node
-  per service (name and one line, each linking to its row), joined by
-  `site.js` to the circuit's lower-left node on wide screens. Hovering
-  or focusing a service turns its node and matching circuit trace blue.
-  The line draws once on load; reduced motion skips it. Vertical line on
-  phones.
+- **Hero** (owner, 18 Oct, "the circuit runs through the page", then a
+  UX audit): heading in two weights and sizes ("Apps, games and
+  software." bold ink on one line; "Designed, built and shipped
+  in-house." regular grey at 70%), sized by width and height so the
+  whole hero fits the first screen on 1366x768 and 1536x864 laptops.
+  One action, "Get in touch" (no second link: the services already lead
+  to Services). A circuit line with a solid node per service (not empty
+  circles, which read as radio buttons), nodes at 3:1 (`--node`), name
+  and one line each, joined by `site.js` to the circuit's lower-left
+  node on wide screens. Hover or focus turns the node, name and matching
+  circuit trace blue. The line draws once on load; reduced motion skips
+  it. On phones a vertical line with the names only.
 - **Contact**: one clear block, no form (owner, 18 Oct): the email set
   large, one primary "Email us" (mailto with a subject) and a "Copy
   address" ghost button (shown only where the clipboard works; result

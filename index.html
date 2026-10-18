@@ -58,17 +58,18 @@ permalink: /
 
 <section class="hero" id="top" aria-labelledby="hero-title">
   {%- comment -%} The circuit runs through the hero (owner, 18 Oct): a
-  line under the actions with a drop and an open node per service, as in
-  the logo, joined by site.js to a trace of the circuit on the right.
-  Hovering or focusing a service turns its drop, node and matching trace
-  blue (colour only). Heading in two weights: what we make, then how. {%- endcomment %}
+  line under the action with a solid node on it per service (a solder
+  point, not an empty circle, so it can't read as a radio button or a
+  stepper), joined by site.js to a trace of the circuit on the right.
+  Hovering or focusing a service turns its node, name and matching trace
+  blue (colour only). One action: the services are the way to Services.
+  Heading in two weights and two sizes: what we make, then how. {%- endcomment %}
   <div class="wrap grid hero-inner">
     <div class="hero-copy">
       <h1 id="hero-title" class="hero-title"><span class="hero-title-a">Apps, games and software.</span> <span class="hero-title-b">Designed, built and shipped in-house.</span></h1>
       <p class="hero-lead">We take every product from first idea and design to launch, and keep improving it with every update after.</p>
       <div class="hero-actions">
         <a class="btn btn--primary btn--lg" href="#contact">Get in touch<svg class="icon btn-arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
-        <a class="link-arrow" href="#services"><span class="link-text">See our services</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
       </div>
       <ul class="bus" role="list" aria-label="What we build" data-bus>
         {%- for s in site.data.services %}
