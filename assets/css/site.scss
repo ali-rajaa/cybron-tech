@@ -500,8 +500,12 @@ main:focus { outline: none; }
   line-height: 1.6;
   text-wrap: pretty;
 }
-.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: clamp(1.5rem, 4vh, 2.25rem); }
+/* "Get in touch" lives in the header (owner, 18 Oct: not twice). Only
+   on phones under 480px, where the header has no room for it, does the
+   hero carry it. */
+.hero-actions { display: none; }
 @media (max-width: 479.98px) {
+  .hero-actions { display: flex; margin-top: 2rem; }
   .hero-actions .btn { width: 100%; }
 }
 
@@ -509,7 +513,7 @@ main:focus { outline: none; }
    (the logo's solder points), the name and one line beneath. Names only,
    on a vertical line, on phones (the Services section follows). Nodes
    are --node (3:1 on white): they mark links. */
-.bus { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); margin-top: clamp(1.75rem, 5vh, 3rem); }
+.bus { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); margin-top: clamp(2.25rem, 6vh, 3.25rem); }
 .bus::before {
   content: "";
   position: absolute;
@@ -655,16 +659,19 @@ main:focus { outline: none; }
 .service-title .icon { width: 1.25rem; height: 1.25rem; color: var(--text-3); }
 .service-body { margin-top: 0.75rem; }
 .service-text { max-width: 36rem; color: var(--text-2); line-height: var(--leading-relaxed); }
+/* What each service covers: a short list, one item a line, each marked
+   with a hairline dash (no separators that can strand at a wrap). */
 .service-scope {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 0;
+  display: grid;
+  gap: 0.375rem;
   margin-top: 1rem;
   color: var(--text-3);
   font-size: 0.875rem;
+  line-height: 1.45;
   letter-spacing: var(--track-small);
 }
-.service-scope li + li::before { content: "/"; margin-inline: 0.625rem; color: var(--line-strong); }
+.service-scope li { position: relative; padding-left: 1.125rem; }
+.service-scope li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 0.5rem; height: 1.5px; background: var(--line-strong); }
 @media (min-width: 768px) {
   .service-row { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); column-gap: 2rem; align-items: baseline; }
   .service-body { margin-top: 0; }
@@ -713,7 +720,7 @@ main:focus { outline: none; }
 
 /* ---------- About: asymmetric, copy on 6, glance on 5 (with a gap
    column between). ---------- */
-.about-grid { align-items: center; row-gap: 3rem; }
+.about-grid { align-items: start; row-gap: 3rem; }
 @media (min-width: 1024px) {
   .about-copy { grid-column: 1 / span 6; }
   .glance { grid-column: 8 / span 5; }
@@ -760,6 +767,9 @@ main:focus { outline: none; }
 
 /* ---------- Careers: a left-aligned panel ----------
    Heading on 5 columns, the text and link on 6 beside it. */
+/* The panel carries its own padding, so the section around it takes
+   half, and the text lands where every other section's does. */
+.section.careers { padding-block: calc(var(--space-section) / 2); }
 .careers-panel {
   padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
   border: 1px solid var(--line);
@@ -850,7 +860,7 @@ main:focus { outline: none; }
   .footer-facts a:hover { color: var(--accent); }
 }
 .footer-cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem var(--grid-gap); }
-@media (min-width: 400px) {
+@media (min-width: 360px) {
   .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (min-width: 640px) {

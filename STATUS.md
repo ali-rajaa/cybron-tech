@@ -67,7 +67,9 @@ white with a hairline. No navy bands.
   an editorial list (sticky heading 4, list 7), steps 3/3/3/3, about
   6 + gap + 5, careers 5 + 6, contact 6 + 5, footer 5 + 6 (three columns,
   one column under 400px).
-- **Spacing**: sections 96 to 128px (144px on 1680px+ screens, where the
+- **Spacing**: every section's content starts the same distance in
+  (Careers' panel carries half of it; About aligns to the top);
+  sections 96 to 128px (144px on 1680px+ screens, where the
   measure also widens to 84rem).
 - **Motion**: hover transitions 300ms ease-in-out (colour, opacity and
   border only); a staggered fade-and-rise on load (starts at 0.01
@@ -93,8 +95,9 @@ white with a hairline. No navy bands.
   software." bold ink on one line; "Designed, built and shipped
   in-house." regular grey at 70%), sized by width and height so the
   whole hero fits the first screen on 1366x768 and 1536x864 laptops.
-  One action, "Get in touch" (no second link: the services already lead
-  to Services). A circuit line with a solid node per service (not empty
+  No button in the hero: "Get in touch" is in the header (owner, 18 Oct:
+  not twice); only on phones under 480px, where the header has no room
+  for it, does the hero show it. A circuit line with a solid node per service (not empty
   circles, which read as radio buttons), nodes at 3:1 (`--node`), name
   and one line each, joined by `site.js` to the circuit's lower-left
   node on wide screens. Hover or focus turns the node, name and matching
