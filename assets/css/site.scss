@@ -92,7 +92,6 @@
   --track-headline: -0.015em;
   --track-body: -0.011em;
   --track-small: -0.004em;
-  --track-caps: 0.14em;
   --leading-tight: 1.05;
   --leading-snug: 1.2;
   --leading-relaxed: 1.7;
@@ -303,17 +302,6 @@ main:focus { outline: none; }
   .link-arrow:hover .icon { transform: translateX(4px); color: var(--text); }
 }
 
-/* Eyebrow: the small capitals line above a heading. Neutral. */
-.eyebrow {
-  color: var(--text-3);
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: var(--track-caps);
-  text-transform: uppercase;
-}
-.eyebrow--dark { color: var(--on-dark-3); }
-
 .check-list li { display: flex; align-items: flex-start; gap: 0.625rem; }
 .check-list li + li { margin-top: 0.5rem; }
 .check-list .icon { width: 1rem; height: 1rem; margin-top: 0.3rem; color: var(--text-3); stroke-width: 2.25; }
@@ -499,7 +487,6 @@ main:focus { outline: none; }
 }
 .hero-title {
   max-width: 14ch;
-  margin-top: 1.25rem;
   font-size: clamp(2.625rem, 1.5rem + 4.4vw, 5rem);
   font-weight: 700;
   line-height: var(--leading-tight);
@@ -600,9 +587,9 @@ main:focus { outline: none; }
 .section--light { background: var(--bg-alt); }
 .section-head { max-width: 44rem; margin-bottom: var(--space-head); }
 .section-head--center { margin-inline: auto; text-align: center; }
+/* No label line above headings (owner, 18 Oct): the heading leads. */
 .section-head h2,
 .about-copy h2 {
-  margin-top: 1rem;
   font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
   font-weight: 700;
   line-height: 1.1;
@@ -696,8 +683,7 @@ main:focus { outline: none; }
   width: 1px;
   background: var(--line-strong);
 }
-.step-num { color: var(--text-3); font-size: 0.75rem; font-weight: 700; letter-spacing: var(--track-caps); text-transform: uppercase; }
-.step-title { margin-top: 0.5rem; font-size: 1.25rem; font-weight: 650; letter-spacing: var(--track-headline); }
+.step-title { padding-top: 0.625rem; font-size: 1.25rem; font-weight: 650; letter-spacing: var(--track-headline); }
 .step-text { margin-top: 0.625rem; color: var(--text-2); line-height: var(--leading-relaxed); }
 @media (min-width: 768px) {
   .steps::before { display: none; }
@@ -714,7 +700,7 @@ main:focus { outline: none; }
   .about-copy { grid-column: 1 / span 6; }
   .glance { grid-column: 8 / span 5; }
 }
-.about-copy p:not(.eyebrow) { max-width: 38rem; margin-top: 1.25rem; color: var(--text-2); font-size: 1.0625rem; line-height: var(--leading-relaxed); }
+.about-copy p { max-width: 38rem; margin-top: 1.25rem; color: var(--text-2); font-size: 1.0625rem; line-height: var(--leading-relaxed); }
 .about-copy .about-lead { margin-top: 1.75rem; color: var(--text); font-size: 1.1875rem; line-height: 1.6; }
 .glance {
   padding: clamp(1.75rem, 4vw, 2.5rem);
@@ -723,7 +709,7 @@ main:focus { outline: none; }
   color: var(--on-dark);
   box-shadow: var(--shadow-lg);
 }
-.glance-list { margin-top: 1.5rem; }
+.glance-list { margin: 0; }
 .glance-list > div { padding-block: 1.125rem; border-top: 1px solid var(--line-dark); }
 .glance-list > div:first-child { border-top: 0; padding-top: 0.25rem; }
 .glance-list dt { display: flex; align-items: center; gap: 0.5rem; color: var(--on-dark-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--track-small); }
@@ -764,19 +750,7 @@ main:focus { outline: none; }
   opacity: 0.6;
 }
 .careers-inner { max-width: 42rem; }
-.careers-icon {
-  display: inline-grid;
-  place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  margin-bottom: 1.5rem;
-  border-radius: 50%;
-  border: 1px solid var(--line-dark-strong);
-  color: var(--on-dark);
-}
-.careers-icon .icon { width: 1.375rem; height: 1.375rem; }
 .careers-title {
-  margin-top: 1rem;
   font-size: clamp(2.25rem, 1.5rem + 3.2vw, 3.75rem);
   font-weight: 700;
   line-height: var(--leading-tight);
@@ -807,7 +781,7 @@ main:focus { outline: none; }
 }
 .footer-line { max-width: 22rem; margin-top: 1rem; color: var(--on-dark-2); font-size: 0.9375rem; line-height: 1.6; }
 .footer-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem var(--grid-gap); }
-.footer-head { color: var(--on-dark-3); font-size: 0.75rem; font-weight: 700; letter-spacing: var(--track-caps); text-transform: uppercase; }
+.footer-head { color: var(--on-dark); font-size: 0.875rem; font-weight: 600; letter-spacing: var(--track-small); }
 .footer-col ul { margin-top: 0.75rem; }
 .footer-col a {
   display: inline-flex;

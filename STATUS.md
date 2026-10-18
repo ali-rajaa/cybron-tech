@@ -73,6 +73,11 @@ over white sections.
   it off.
 - **Depth**: hairline borders, soft multi-layer shadows that deepen on
   hover.
+- **No label lines above headings** (owner, 18 Oct: "remove these weird
+  AI generic headers"). No small-capitals eyebrows ("SOFTWARE COMPANY",
+  "WHAT WE DO", ...), no "STEP 1" labels, no icon-in-a-circle above the
+  Careers heading, and the footer column headings are plain sentence
+  case. Headings lead their sections on their own. Don't add them back.
 - **Flagged, not built** (would break "never invent facts"): case
   studies and data visualisations need real projects and numbers from the
   owner; a contact form needs an email address and a decision on where
