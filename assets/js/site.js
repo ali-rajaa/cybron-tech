@@ -101,6 +101,7 @@
     (document.queryCommandSupported && document.queryCommandSupported('copy'));
   if (canCopy) document.querySelectorAll('[data-copy]').forEach(function (btn) {
     var label = btn.querySelector('.copy-text');
+    var glyph = btn.querySelector('use');
     var status = document.getElementById(btn.getAttribute('aria-describedby'));
     var timer;
     btn.hidden = false;
@@ -108,6 +109,7 @@
       copyText(btn.getAttribute('data-copy')).then(function () {
         if (label) label.textContent = 'Copied';
         if (status) status.textContent = 'Email address copied.';
+        if (glyph) glyph.setAttribute('href', '#i-check');
         btn.classList.add('is-copied');
       }, function () {
         if (label) label.textContent = 'Copy failed';
@@ -118,6 +120,7 @@
         timer = setTimeout(function () {
           if (label) label.textContent = 'Copy address';
           if (status) status.textContent = '';
+          if (glyph) glyph.setAttribute('href', '#i-copy');
           btn.classList.remove('is-copied');
         }, 2500);
       });

@@ -72,11 +72,23 @@ white with a hairline. No navy bands.
   (Careers' panel carries half of it; About aligns to the top);
   sections 96 to 128px (144px on 1680px+ screens, where the
   measure also widens to 84rem).
-- **Motion**: hover transitions 300ms ease-in-out (colour, opacity and
-  border only); a staggered fade-and-rise on load (starts at 0.01
-  opacity so it never delays the largest paint); reduced motion turns it
-  off. The hero circuit is still.
-- **Depth**: hairline borders and soft shadows; nothing lifts on hover.
+- **Motion and feel** (owner, 26 Oct: apply anthropic-skills:apple-design
+  everywhere): hover colour 180ms ease-out (starts at once); every press
+  answers on pointer-down (buttons: deeper fill and scale 0.97 in 80ms,
+  then a critically damped spring back; text links dim to 60% and ease
+  back); hovers only on pointers that hover, so a tap never sticks;
+  focus rings follow each control's own corners; the phone sheet leaves
+  the way it came over a dimming scrim; a staggered fade-and-rise on load
+  and the hero line drawing once; reduced motion turns movement into
+  plain dims and fades.
+- **Materials and type**: translucent header with near-ink nav text
+  (vibrancy, not flat grey), a quiet fill on hover, and a soft edge once
+  content scrolls under it; tracking by size (display -0.04em to captions
+  +0.006em) and leading by size; optical sizing on.
+- **Spacing scale**: one 4px scale (`--space-1` 4px to `--space-10`
+  64px) for every margin, padding and gap; title to text 8, heading to
+  intro 20, list rows 24 to 32, blocks 48 to 64.
+- **Depth**: hairlines; no shadows on content; nothing lifts on hover.
 - **No label lines above headings** (owner, 18 Oct: "remove these weird
   AI generic headers"). No small-capitals eyebrows ("SOFTWARE COMPANY",
   "WHAT WE DO", ...), no "STEP 1" labels, no icon-in-a-circle above the
@@ -113,7 +125,7 @@ white with a hairline. No navy bands.
 - **How we work**: four numbered steps on one line (order shown, not
   "Step 1" labels), what we do, and what you get from each on a hairline;
   title, text and "You get" line up across the four (CSS subgrid).
-- **Copy address** works on https (Clipboard API) and on plain http, as
+- **Copy address** shows a tick when done, and works on https (Clipboard API) and on plain http, as
   on the preview (a selected field and execCommand). `[hidden]` always
   wins over `.btn`, so a control the script hides stays hidden.
 - **Contact**: one clear block, no form (owner, 18 Oct): the email set

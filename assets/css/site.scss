@@ -20,10 +20,15 @@
      backgrounds; no card grids for everything (services are an editorial
      list); corner radius 4 to 8px only; hovers change colour or border,
      never lift or scale; no centred heading-and-buttons blocks.
-   - Calm motion: transitions around 300ms, a staggered fade-and-rise on
-     load, a spring for anything that moves, nothing that loops fast.
-     Reduced motion, reduced transparency and more contrast each get a
-     gentler or plainer equivalent (apple-design rules, as on Fuzon Apps).
+   - Apple's interface rules (anthropic-skills:apple-design), applied to
+     every component: feedback the instant a finger or pointer goes down
+     (never only on release), hover colour that starts at once (ease-out,
+     not ease-in-out), a press that answers immediately and springs back,
+     critically damped springs for anything that moves, paths that leave
+     the way they came, translucent chrome with a soft edge, vibrant (not
+     flat grey) text on glass, size-specific tracking and leading, and
+     spacing on one 4px scale. Reduced motion, reduced transparency and
+     more contrast each get a gentler or plainer equivalent.
    - Every value comes from a token below; components never use raw hex.
 
    Plain CSS in a .scss file so Jekyll's Sass minifies it; the empty front
@@ -52,6 +57,9 @@
   --glass: rgba(255, 255, 255, 0.82);       /* header material */
   --glass-strong: rgba(255, 255, 255, 0.92);
   --scrim: rgba(13, 18, 32, 0.28);
+  --text-glass: #262e3f;            /* nav text on the translucent header: 13.6:1 */
+  --fill-hover: rgba(13, 18, 32, 0.05);   /* quiet hover fill (nav, menu button) */
+  --fill-press: rgba(13, 18, 32, 0.09);   /* the same, pressed */
   --blank-fill: rgba(255, 170, 60, 0.2);
   --blank-line: #a35a00;
 
@@ -64,6 +72,20 @@
   --radius-sm: 4px;
   --radius: 6px;
   --radius-lg: 8px;
+
+  /* ---- Spacing: one 4px scale. Related things sit closer than
+     unrelated ones (title to text 8, heading to intro 20, rows 24 to 32,
+     blocks 48 to 64, sections 96 to 144). ---- */
+  --space-1: 0.25rem;   /* 4 */
+  --space-2: 0.5rem;    /* 8 */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.25rem;   /* 20 */
+  --space-6: 1.5rem;    /* 24 */
+  --space-7: 2rem;      /* 32 */
+  --space-8: 2.5rem;    /* 40 */
+  --space-9: 3rem;      /* 48 */
+  --space-10: 4rem;     /* 64 */
 
   /* ---- Layout ---- */
   --font: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -79,12 +101,15 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-spring: var(--ease-out);
   --ease-exit: cubic-bezier(0.64, 0, 0.78, 0);
-  --dur-press: 80ms;
-  --dur-hover: 300ms;
+  --ease-hover: cubic-bezier(0.2, 0, 0, 1);   /* starts at once, settles gently */
+  --dur-press: 80ms;                           /* press: instant */
+  --dur-release: 240ms;                        /* letting go: eases back */
+  --dur-hover: 180ms;
   --dur-exit: 160ms;
   --dur-spring-fast: 0.4s;
   --dur-spring: 0.54s;
-  --press-scale: 0.98;
+  --press-scale: 0.97;
+  --press-opacity: 0.6;                        /* text links, pressed */
 
   /* ---- Type: tracking by size ---- */
   --track-display: -0.04em;
@@ -92,7 +117,8 @@
   --track-title-2: -0.025em;
   --track-headline: -0.015em;
   --track-body: -0.011em;
-  --track-small: -0.004em;
+  --track-small: -0.002em;          /* 14 to 15px */
+  --track-caption: 0.006em;         /* 12 to 13px: a touch open */
   --leading-tight: 1.05;
   --leading-snug: 1.2;
   --leading-relaxed: 1.7;
@@ -147,6 +173,7 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   letter-spacing: var(--track-body);
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -159,7 +186,10 @@ a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px
 button { font: inherit; color: inherit; letter-spacing: inherit; }
 a, button, summary, label { touch-action: manipulation; }
 main:focus { outline: none; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* Text links get a small radius for the ring; buttons keep their own
+   corners (the ring follows them), so nothing changes shape on focus. */
+a:not(.btn):focus-visible { border-radius: var(--radius-sm); }
 
 .skip-link {
   position: absolute;
@@ -239,11 +269,11 @@ main:focus { outline: none; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   min-height: 2.75rem;
-  padding: 0.625rem 1.25rem;
+  padding: var(--space-2) var(--space-5);
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.2;
@@ -252,7 +282,7 @@ main:focus { outline: none; }
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color var(--dur-hover) var(--ease-in-out), border-color var(--dur-hover) var(--ease-in-out), color var(--dur-hover) var(--ease-in-out), box-shadow var(--dur-hover) var(--ease-in-out), transform var(--dur-spring-fast) var(--ease-spring);
+  transition: background-color var(--dur-hover) var(--ease-hover), border-color var(--dur-hover) var(--ease-hover), color var(--dur-hover) var(--ease-hover), box-shadow var(--dur-hover) var(--ease-hover), transform var(--dur-spring-fast) var(--ease-spring);
 }
 .btn .icon { width: 1.125rem; height: 1.125rem; }
 .btn-arrow { transition: transform var(--dur-hover) var(--ease-spring); }
@@ -263,26 +293,30 @@ main:focus { outline: none; }
 }
 /* Ghost: a crisp hairline border on a light ground. */
 .btn--ghost { border-color: var(--line-strong); color: var(--text); background: var(--surface); }
-.btn--sm { min-height: 2.5rem; padding: 0.5rem 1rem; font-size: 0.875rem; letter-spacing: var(--track-small); }
+.btn--sm { min-height: 2.5rem; padding: var(--space-2) var(--space-4); border-radius: var(--radius); font-size: 0.875rem; letter-spacing: var(--track-small); }
 .btn--sm::after { content: ""; position: absolute; inset: -2px; }
-.btn--lg { min-height: 3.125rem; padding: 0.8125rem 1.5rem; font-size: 1rem; }
+.btn--lg { min-height: 3.125rem; padding: var(--space-3) var(--space-6); font-size: 1rem; }
 @media (hover: hover) {
   .btn--primary:hover { background: var(--accent-hover); }
   .btn--ghost:hover { border-color: var(--text-3); background: var(--bg-alt); }
   .btn:hover .btn-arrow { transform: translateX(4px); }
 }
+/* Press: answers the instant the pointer goes down (a slightly deeper
+   fill and a small scale), then springs back on release. */
 .btn:active, .nav-toggle:active {
   transform: scale(var(--press-scale));
   transition-duration: var(--dur-press);
   transition-timing-function: ease-out;
 }
+.btn--primary:active { background: var(--accent-hover); }
+.btn--ghost:active { background: var(--well); border-color: var(--text-3); }
 
 /* Tertiary: a text link whose underline draws in from the left on hover,
    with the arrow sliding after it. Neutral, not accent. */
 .link-arrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--space-2);
   min-height: 2.75rem;
   color: var(--text);
   font-weight: 600;
@@ -292,18 +326,29 @@ main:focus { outline: none; }
 .link-text {
   background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
   padding-bottom: 2px;
-  transition: background-size var(--dur-hover) var(--ease-in-out);
+  transition: background-size var(--dur-spring-fast) var(--ease-spring);
 }
-.link-arrow .icon { width: 1.125rem; height: 1.125rem; color: var(--text-3); transition: transform var(--dur-hover) var(--ease-spring), color var(--dur-hover) var(--ease-in-out); }
-.link-arrow:active { opacity: 0.6; }
+.link-arrow .icon { width: 1.125rem; height: 1.125rem; color: var(--text-3); transition: transform var(--dur-spring-fast) var(--ease-spring), color var(--dur-hover) var(--ease-hover); }
 .link-arrow:focus-visible .link-text { background-size: 100% 1px; }
 @media (hover: hover) {
   .link-arrow:hover .link-text { background-size: 100% 1px; }
   .link-arrow:hover .icon { transform: translateX(4px); color: var(--text); }
 }
 
-.check-list li { display: flex; align-items: flex-start; gap: 0.625rem; }
-.check-list li + li { margin-top: 0.5rem; }
+/* Every text link answers a press the same way: it dims at once and
+   eases back when released. */
+.link-arrow, .nav-link, .brand, .bus-stop a, .contact-email, .footer-col a, .footer-facts a, .footer-top {
+  transition-property: color, opacity, background-color;
+  transition-duration: var(--dur-hover), var(--dur-release), var(--dur-hover);
+  transition-timing-function: var(--ease-hover);
+}
+.link-arrow:active, .nav-link:active, .brand:active, .bus-stop a:active, .contact-email:active, .footer-col a:active, .footer-facts a:active, .footer-top:active {
+  opacity: var(--press-opacity);
+  transition-duration: 0s;
+}
+
+.check-list li { display: flex; align-items: flex-start; gap: var(--space-2); }
+.check-list li + li { margin-top: var(--space-2); }
 .check-list .icon { width: 1rem; height: 1rem; margin-top: 0.3rem; color: var(--text-3); stroke-width: 2.25; }
 
 /* ---------- Header ----------
@@ -317,20 +362,23 @@ main:focus { outline: none; }
   background: var(--glass);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
-  box-shadow: inset 0 -1px 0 transparent;
-  transition: box-shadow var(--dur-hover) ease, background-color var(--dur-hover) ease;
+  box-shadow: 0 1px 0 transparent, 0 10px 24px -18px transparent;
+  transition: box-shadow var(--dur-spring) var(--ease-hover), background-color var(--dur-spring) var(--ease-hover);
 }
-.site-header.is-scrolled { background: var(--glass-strong); box-shadow: inset 0 -1px 0 var(--line); }
+/* Scrolled: a hairline plus a soft falloff below it, so the edge where
+   content slides under the glass reads as depth, not a ruled line. */
+.site-header.is-scrolled { background: var(--glass-strong); box-shadow: 0 1px 0 var(--line), 0 10px 24px -18px rgba(13, 18, 32, 0.22); }
 .site-header.nav-open { background: var(--surface); }
-.header-bar { display: flex; align-items: center; gap: 2.5rem; min-height: var(--header-h); }
+.header-bar { display: flex; align-items: center; gap: var(--space-8); min-height: var(--header-h); }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: var(--space-3);
   min-height: 2.75rem;
   color: inherit;
   text-decoration: none;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 /* The full logo (disc plus circuit traces, 150 x 88). At this size the
    traces need a heavier line than the source to stay visible. */
@@ -339,24 +387,24 @@ main:focus { outline: none; }
 .brand-name { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.02em; }
 .brand-sub { font-weight: 400; color: var(--text-2); }
 
-.nav-list { display: flex; align-items: center; gap: 0.25rem; }
+.nav-list { display: flex; align-items: center; gap: var(--space-1); }
 .nav-link {
   position: relative;
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius-sm);
-  color: var(--text-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  color: var(--text-glass);
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: var(--track-small);
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color var(--dur-hover) var(--ease-in-out);
 }
-/* Current section: white text and a short accent marker (a critical
-   state, so it may use the accent). */
+/* Vibrancy: on the glass the links are near-ink, not flat grey. Hover
+   lays a quiet fill behind the link; the current section gets ink text
+   and a short accent marker (a critical state, so it may use the accent). */
 .nav-link::after {
   content: "";
   position: absolute;
@@ -372,23 +420,27 @@ main:focus { outline: none; }
 .nav-link[aria-current="true"] { color: var(--text); }
 .nav-link[aria-current="true"]::after { transform: scaleX(1); }
 @media (hover: hover) {
-  .nav-link:hover { color: var(--text); }
+  .nav-link:hover { color: var(--text); background: var(--fill-hover); }
 }
-.header-actions { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
+.header-actions { display: flex; align-items: center; gap: var(--space-2); margin-left: auto; }
 .nav-toggle {
   display: none;
   place-items: center;
   width: 2.75rem;
   height: 2.75rem;
-  margin-right: -0.5rem;
+  margin-right: calc(var(--space-2) * -1);
   border: 0;
-  border-radius: var(--radius-sm);
-  background: none;
+  border-radius: var(--radius);
+  background: transparent;
   color: var(--text);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: transform var(--dur-spring-fast) var(--ease-spring);
+  transition: transform var(--dur-spring-fast) var(--ease-spring), background-color var(--dur-hover) var(--ease-hover);
 }
+@media (hover: hover) {
+  .nav-toggle:hover { background: var(--fill-hover); }
+}
+.nav-toggle:active { background: var(--fill-press); }
 .nav-toggle .icon { width: 1.5rem; height: 1.5rem; }
 .nav-toggle-close { display: none; }
 .nav-open .nav-toggle-open { display: none; }
@@ -411,9 +463,9 @@ main:focus { outline: none; }
    returns the same way, over a dimmed page. Without JavaScript the links
    show as a plain row under the bar. */
 @media (max-width: 899.98px) {
-  .header-bar { gap: 1rem; flex-wrap: wrap; }
+  .header-bar { gap: var(--space-4); flex-wrap: wrap; }
   .nav-toggle { display: grid; }
-  .site-nav { order: 3; width: 100%; padding-bottom: 0.75rem; }
+  .site-nav { order: 3; width: 100%; padding-bottom: var(--space-3); }
   .nav-list { flex-wrap: wrap; }
   .js .header-bar { flex-wrap: nowrap; }
   .js .site-nav {
@@ -424,7 +476,7 @@ main:focus { outline: none; }
     max-height: calc(100dvh - var(--header-h));
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 0.5rem var(--gutter) 1.5rem;
+    padding: var(--space-2) var(--gutter) var(--space-6);
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     box-shadow: var(--shadow-lg);
@@ -441,9 +493,9 @@ main:focus { outline: none; }
   }
   .js .nav-list { flex-direction: column; align-items: stretch; gap: 0; }
   .js .nav-list li { border-bottom: 1px solid var(--line); }
-  .js .nav-link { width: 100%; min-height: 3.25rem; padding-inline: 0.25rem; border-radius: 0; color: var(--text); font-size: 1.0625rem; }
-  .js .nav-link::after { left: 0.25rem; right: auto; width: 1.5rem; bottom: 0.75rem; }
-  .js .nav-sheet-cta { display: flex; width: 100%; margin-top: 1.5rem; }
+  .js .nav-link { width: 100%; min-height: 3.25rem; padding-inline: var(--space-1); border-radius: 0; color: var(--text); font-size: 1.0625rem; letter-spacing: var(--track-body); }
+  .js .nav-link::after { left: var(--space-1); right: auto; width: var(--space-6); bottom: var(--space-3); }
+  .js .nav-sheet-cta { display: flex; width: 100%; margin-top: var(--space-6); }
   .js .nav-open ~ .nav-scrim { opacity: 1; pointer-events: auto; transition-duration: 0.24s; }
 }
 @media (max-width: 479.98px) {
@@ -463,7 +515,7 @@ main:focus { outline: none; }
   background: var(--bg);
   color: var(--text);
 }
-.hero-inner { align-items: center; row-gap: clamp(3rem, 7vw, 4rem); }
+.hero-inner { align-items: center; row-gap: clamp(var(--space-9), 7vw, var(--space-10)); }
 @media (min-width: 1024px) {
   .hero-copy { grid-column: 1 / span 7; }
   .hero-visual { grid-column: 8 / span 5; }
@@ -497,7 +549,7 @@ main:focus { outline: none; }
 }
 .hero-lead {
   max-width: 34rem;
-  margin-top: 1.25rem;
+  margin-top: var(--space-5);
   color: var(--text-2);
   font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
   line-height: 1.6;
@@ -508,7 +560,7 @@ main:focus { outline: none; }
    hero carry it. */
 .hero-actions { display: none; }
 @media (max-width: 479.98px) {
-  .hero-actions { display: flex; margin-top: 2rem; }
+  .hero-actions { display: flex; margin-top: var(--space-7); }
   .hero-actions .btn { width: 100%; }
 }
 
@@ -531,11 +583,12 @@ main:focus { outline: none; }
   position: relative;
   display: grid;
   align-content: center;
-  gap: 0.25rem;
+  gap: var(--space-1);
   min-height: 2.75rem;
   padding-left: 1.75rem;
   color: var(--text);
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .bus-stop a::after {
   content: "";
@@ -547,26 +600,36 @@ main:focus { outline: none; }
   border-radius: 50%;
   background: var(--node);
   box-shadow: 0 0 0 3px var(--bg);
-  transition: background-color var(--dur-hover) var(--ease-in-out);
+  transition: background-color var(--dur-hover) var(--ease-hover);
 }
-.bus-name { font-size: 1rem; font-weight: 600; letter-spacing: var(--track-small); transition: color var(--dur-hover) var(--ease-in-out); }
+.bus-name { font-size: 1rem; font-weight: 600; letter-spacing: var(--track-small); transition: color var(--dur-hover) var(--ease-hover); }
 .bus-line { display: none; color: var(--text-2); font-size: 0.875rem; line-height: 1.45; }
 @media (min-width: 640px) {
   .bus { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .bus::before { top: 0; bottom: auto; left: 0.28125rem; right: 0; width: auto; height: 1.5px; transform-origin: left; }
-  .bus-stop a { align-content: start; padding: 1.25rem 1rem 0 0; }
+  .bus-stop a { align-content: start; padding: var(--space-5) var(--space-4) 0 0; }
   .bus-stop a::after { top: calc(0.75px - 0.28125rem); }
   .bus-line { display: block; }
 }
-/* Hover or focus a service: its node and name, and its trace in the
+/* Hover (pointers that hover only, so a tap never leaves it stuck) or
+   keyboard focus on a service: its node and name, and its trace in the
    circuit, turn blue. Colour only; nothing moves. */
-.bus-stop a:is(:hover, :focus-visible)::after { background: var(--accent); }
-.bus-stop a:is(:hover, :focus-visible) .bus-name { color: var(--accent); }
-.hero-inner:has(.bus-stop:nth-child(1) a:is(:hover, :focus-visible)) .t1,
-.hero-inner:has(.bus-stop:nth-child(2) a:is(:hover, :focus-visible)) .t2,
-.hero-inner:has(.bus-stop:nth-child(3) a:is(:hover, :focus-visible)) .t3,
-.hero-inner:has(.bus-stop:nth-child(4) a:is(:hover, :focus-visible)) .t4,
-.hero-inner:has(.bus-stop:nth-child(5) a:is(:hover, :focus-visible)) .t5 { stroke: var(--accent); }
+.bus-stop a:focus-visible::after { background: var(--accent); }
+.bus-stop a:focus-visible .bus-name { color: var(--accent); }
+.hero-inner:has(.bus-stop:nth-child(1) a:focus-visible) .t1,
+.hero-inner:has(.bus-stop:nth-child(2) a:focus-visible) .t2,
+.hero-inner:has(.bus-stop:nth-child(3) a:focus-visible) .t3,
+.hero-inner:has(.bus-stop:nth-child(4) a:focus-visible) .t4,
+.hero-inner:has(.bus-stop:nth-child(5) a:focus-visible) .t5 { stroke: var(--accent); }
+@media (hover: hover) {
+  .bus-stop a:hover::after { background: var(--accent); }
+  .bus-stop a:hover .bus-name { color: var(--accent); }
+  .hero-inner:has(.bus-stop:nth-child(1) a:hover) .t1,
+  .hero-inner:has(.bus-stop:nth-child(2) a:hover) .t2,
+  .hero-inner:has(.bus-stop:nth-child(3) a:hover) .t3,
+  .hero-inner:has(.bus-stop:nth-child(4) a:hover) .t4,
+  .hero-inner:has(.bus-stop:nth-child(5) a:hover) .t5 { stroke: var(--accent); }
+}
 
 /* The join from the line to the circuit's lower-left node, drawn by
    site.js on wide screens only (where the circuit sits beside it). */
@@ -579,8 +642,8 @@ main:focus { outline: none; }
   .hero-visual { max-width: 15rem; }
 }
 .hero-circuit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.hero-circuit .trace path { stroke: var(--trace); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--dur-hover) var(--ease-in-out); }
-.hero-circuit .trace-node circle { fill: var(--surface); stroke: var(--trace); stroke-width: 1.5; transition: stroke var(--dur-hover) var(--ease-in-out); }
+.hero-circuit .trace path { stroke: var(--trace); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--dur-hover) var(--ease-hover); }
+.hero-circuit .trace-node circle { fill: var(--surface); stroke: var(--trace); stroke-width: 1.5; transition: stroke var(--dur-hover) var(--ease-hover); }
 .hero-logo {
   position: absolute;
   left: 50%;
@@ -625,7 +688,7 @@ main:focus { outline: none; }
 }
 .section-sub {
   max-width: 38rem;
-  margin-top: 1.25rem;
+  margin-top: var(--space-5);
   color: var(--text-2);
   font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
   line-height: var(--leading-relaxed);
@@ -647,31 +710,31 @@ main:focus { outline: none; }
 /* ---------- Services: an editorial table ----------
    The heading on top, then one row per service on a hairline: the name
    on 4 columns, what it is on 4, what it covers on 4. Stacks on phones. */
-.service-row { padding-block: 2rem; border-top: 1px solid var(--line-strong); }
+.service-row { padding-block: var(--space-7); border-top: 1px solid var(--line-strong); }
 .service-row:last-child { border-bottom: 1px solid var(--line-strong); }
 .service-title {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
   font-size: 1.25rem;
   font-weight: 650;
   letter-spacing: var(--track-headline);
 }
 .service-title .icon { flex: none; width: 1.25rem; height: 1.25rem; color: var(--text-3); }
-.service-body { margin-top: 0.75rem; }
+.service-body { margin-top: var(--space-2); }
 .service-text { max-width: 36rem; color: var(--text-2); line-height: var(--leading-relaxed); }
 /* What each service covers: a short list, one item a line, each marked
    with a hairline dash (no separators that can strand at a wrap). */
 .service-scope {
   display: grid;
-  gap: 0.375rem;
-  margin-top: 1rem;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
   color: var(--text-3);
   font-size: 0.875rem;
   line-height: 1.45;
   letter-spacing: var(--track-small);
 }
-.service-scope li { position: relative; padding-left: 1.125rem; }
+.service-scope li { position: relative; padding-left: var(--space-4); }
 .service-scope li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 0.5rem; height: 1.5px; background: var(--line-strong); }
 @media (min-width: 768px) {
   .service-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--grid-gap); align-items: baseline; }
@@ -687,7 +750,7 @@ main:focus { outline: none; }
    Wide screens: one hairline through four numbered nodes, each step on
    3 columns beneath it. Tablets: two by two. Phones: a vertical line
    down the nodes. Each step ends with what you get, on a hairline. */
-.steps { position: relative; margin: 0; padding: 0; list-style: none; row-gap: 2.5rem; }
+.steps { position: relative; margin: 0; padding: 0; list-style: none; row-gap: var(--space-8); }
 @media (min-width: 768px) { .steps > * { grid-column: span 6; } }
 @media (min-width: 1024px) { .steps > * { grid-column: span 3; } }
 .step { position: relative; display: flex; flex-direction: column; padding-left: 3.5rem; }
@@ -716,24 +779,24 @@ main:focus { outline: none; }
   position: absolute;
   left: 1.125rem;
   top: 2.25rem;
-  bottom: -2.5rem;
+  bottom: calc(var(--space-8) * -1);
   width: 1px;
   background: var(--line-strong);
 }
-.step-title { padding-top: 0.25rem; font-size: 1.25rem; font-weight: 650; line-height: 1.3; letter-spacing: var(--track-headline); }
-.step-text { margin-top: 0.5rem; color: var(--text-2); line-height: var(--leading-relaxed); }
+.step-title { padding-top: var(--space-1); font-size: 1.25rem; font-weight: 650; line-height: 1.3; letter-spacing: var(--track-headline); }
+.step-text { margin-top: var(--space-2); color: var(--text-2); line-height: var(--leading-relaxed); }
 .step-gives {
   display: grid;
   align-content: start;
-  gap: 0.25rem;
-  margin-top: 1.25rem;
-  padding-top: 1rem;
+  gap: var(--space-1);
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
   border-top: 1px solid var(--line);
   color: var(--text);
   font-weight: 500;
   line-height: 1.5;
 }
-.step-gives-label { color: var(--text-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--track-small); }
+.step-gives-label { color: var(--text-3); font-size: 0.8125rem; font-weight: 600; line-height: 1.4; letter-spacing: var(--track-caption); }
 @media (min-width: 768px) {
   .step:not(:last-child)::before { display: none; }
 }
@@ -756,20 +819,20 @@ main:focus { outline: none; }
 /* ---------- About ----------
    The statement on 6 columns; beside it, on 5, what sets us apart as a
    plain list on hairlines (no box, no shadow). */
-.about-grid { align-items: start; row-gap: 3rem; }
+.about-grid { align-items: start; row-gap: var(--space-9); }
 @media (min-width: 1024px) {
   .about-copy { grid-column: 1 / span 6; }
   .facts { grid-column: 8 / span 5; }
 }
-.about-copy .about-lead { max-width: 34rem; margin-top: 1.75rem; color: var(--text-2); font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); line-height: 1.55; text-wrap: pretty; }
+.about-copy .about-lead { max-width: 34rem; margin-top: var(--space-5); color: var(--text-2); font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); line-height: 1.55; text-wrap: pretty; }
 .facts { margin: 0; border-top: 1px solid var(--line-strong); }
-.facts > div { padding-block: 1.5rem; border-bottom: 1px solid var(--line-strong); }
+.facts > div { padding-block: var(--space-6); border-bottom: 1px solid var(--line-strong); }
 .facts dt { color: var(--text); font-size: 1.125rem; font-weight: 650; letter-spacing: var(--track-headline); }
-.facts dd { margin-top: 0.375rem; color: var(--text-2); line-height: var(--leading-relaxed); }
+.facts dd { margin-top: var(--space-2); color: var(--text-2); line-height: var(--leading-relaxed); }
 /* ---------- Careers ----------
    Laid out like every other section (no box): heading on 5 columns, the
    text and link on 6 beside it. */
-.careers-grid { align-items: center; row-gap: 1.5rem; }
+.careers-grid { align-items: center; row-gap: var(--space-6); }
 @media (min-width: 1024px) {
   .careers-title { grid-column: 1 / span 5; }
   .careers-body { grid-column: 7 / span 6; }
@@ -781,7 +844,7 @@ main:focus { outline: none; }
   letter-spacing: var(--track-title);
 }
 .careers-sub { margin: 0; color: var(--text-2); font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); line-height: var(--leading-relaxed); text-wrap: pretty; }
-.careers-actions { display: flex; margin-top: 2rem; }
+.careers-actions { display: flex; margin-top: var(--space-7); }
 @media (max-width: 479.98px) {
   .careers-actions .btn { width: 100%; white-space: normal; }
 }
@@ -790,7 +853,7 @@ main:focus { outline: none; }
    The heading on 6 columns; on 5 beside it, the two things you need:
    the email (the action, set large, with a copy button) and the office,
    on hairlines like About (no box, no shadow). */
-.contact-grid { align-items: start; row-gap: 3rem; }
+.contact-grid { align-items: start; row-gap: var(--space-9); }
 @media (min-width: 1024px) {
   .contact-intro { grid-column: 1 / span 6; }
   .contact-details { grid-column: 8 / span 5; }
@@ -802,12 +865,13 @@ main:focus { outline: none; }
   letter-spacing: var(--track-title);
 }
 .contact-details { margin: 0; border-top: 1px solid var(--line-strong); }
-.contact-details > div { padding-block: 1.5rem; border-bottom: 1px solid var(--line-strong); }
-.contact-details dt { display: flex; align-items: center; gap: 0.5rem; color: var(--text-3); font-size: 0.875rem; font-weight: 600; letter-spacing: var(--track-small); }
+.contact-details > div { padding-block: var(--space-6); border-bottom: 1px solid var(--line-strong); }
+.contact-details dt { display: flex; align-items: center; gap: var(--space-2); color: var(--text-3); font-size: 0.875rem; font-weight: 600; letter-spacing: var(--track-small); }
 .contact-details dt .icon { width: 1rem; height: 1rem; }
-.contact-details dd { margin-top: 0.5rem; color: var(--text); line-height: 1.6; }
-.contact-details dd + dd { margin-top: 0.75rem; }
+.contact-details dd { margin-top: var(--space-2); color: var(--text); line-height: 1.6; }
+.contact-details dd + dd { margin-top: var(--space-3); }
 .contact-office { font-size: 1.125rem; font-weight: 500; }
+/* Completion: the copy button turns blue and shows a tick for a moment. */
 .contact-copy.is-copied { border-color: var(--accent); color: var(--accent); }
 .contact-email {
   display: inline-flex;
@@ -828,20 +892,20 @@ main:focus { outline: none; }
 
 /* ---------- Footer ---------- */
 .site-footer { padding-top: clamp(4rem, 7vw, 5.5rem); border-top: 1px solid var(--line); background: var(--bg); color: var(--text); }
-.footer-grid { row-gap: 3rem; }
+.footer-grid { row-gap: var(--space-9); }
 @media (min-width: 1024px) {
   .footer-brand { grid-column: 1 / span 5; }
   .footer-cols { grid-column: 7 / span 6; }
 }
-.footer-line { max-width: 26rem; margin-top: 1rem; color: var(--text-2); font-size: 0.9375rem; line-height: 1.65; }
-.footer-facts { display: grid; gap: 0.125rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--line); max-width: 26rem; }
-.footer-facts li { display: flex; align-items: center; gap: 0.625rem; min-height: 2.75rem; color: var(--text-2); font-size: 0.9375rem; }
+.footer-line { max-width: 26rem; margin-top: var(--space-4); color: var(--text-2); font-size: 0.9375rem; line-height: 1.65; }
+.footer-facts { display: grid; gap: 0; margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--line); max-width: 26rem; }
+.footer-facts li { display: flex; align-items: center; gap: var(--space-3); min-height: 2.75rem; color: var(--text-2); font-size: 0.9375rem; }
 .footer-facts .icon { flex: none; width: 1.125rem; height: 1.125rem; color: var(--text-3); }
-.footer-facts a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--text); font-weight: 500; text-decoration: none; overflow-wrap: anywhere; transition: color var(--dur-hover) var(--ease-in-out); }
+.footer-facts a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--text); font-weight: 500; text-decoration: none; overflow-wrap: anywhere; }
 @media (hover: hover) {
   .footer-facts a:hover { color: var(--accent); }
 }
-.footer-cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem var(--grid-gap); }
+.footer-cols { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7) var(--grid-gap); }
 @media (min-width: 360px) {
   .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -849,7 +913,7 @@ main:focus { outline: none; }
   .footer-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 .footer-head { color: var(--text); font-size: 0.875rem; font-weight: 600; letter-spacing: var(--track-small); }
-.footer-col ul { margin-top: 0.75rem; }
+.footer-col ul { margin-top: var(--space-3); }
 .footer-col a {
   display: inline-flex;
   align-items: center;
@@ -857,13 +921,13 @@ main:focus { outline: none; }
   color: var(--text-2);
   font-size: 0.9375rem;
   text-decoration: none;
-  transition: color var(--dur-hover) var(--ease-in-out);
+  -webkit-tap-highlight-color: transparent;
 }
 @media (hover: hover) {
   .footer-col a:hover { color: var(--text); }
 }
-.footer-social { gap: 0.625rem; }
-.footer-social .icon { width: 1.125rem; height: 1.125rem; color: var(--text-3); transition: color var(--dur-hover) var(--ease-in-out); }
+.footer-social { gap: var(--space-3); }
+.footer-social .icon { width: 1.125rem; height: 1.125rem; color: var(--text-3); transition: color var(--dur-hover) var(--ease-hover); }
 @media (hover: hover) {
   .footer-social:hover .icon { color: var(--text); }
 }
@@ -872,23 +936,23 @@ main:focus { outline: none; }
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem 1.5rem;
-  margin-top: 4rem;
-  padding-block: 1.75rem;
+  gap: var(--space-2) var(--space-6);
+  margin-top: var(--space-10);
+  padding-block: var(--space-6) var(--space-7);
   border-top: 1px solid var(--line);
   color: var(--text-3);
   font-size: 0.8125rem;
-  letter-spacing: var(--track-small);
+  line-height: 1.5;
+  letter-spacing: var(--track-caption);
 }
 .footer-top {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--space-2);
   min-height: 2.75rem;
-  margin-block: -0.75rem;
+  margin-block: calc(var(--space-3) * -1);
   color: var(--text-2);
   text-decoration: none;
-  transition: color var(--dur-hover) var(--ease-in-out);
 }
 .footer-top .icon { width: 0.875rem; height: 0.875rem; transform: rotate(-90deg); }
 @media (hover: hover) {
@@ -904,9 +968,9 @@ main:focus { outline: none; }
   letter-spacing: -0.06em;
   color: var(--text);
 }
-.notfound h1 { margin-top: 1rem; font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem); font-weight: 700; letter-spacing: var(--track-title); }
-.notfound p { max-width: 32rem; margin: 1rem auto 0; color: var(--text-2); line-height: var(--leading-relaxed); }
-.notfound .btn { margin-top: 2.5rem; }
+.notfound h1 { margin-top: var(--space-4); font-size: clamp(2rem, 1.5rem + 2vw, 2.75rem); font-weight: 700; letter-spacing: var(--track-title); }
+.notfound p { max-width: 32rem; margin: var(--space-4) auto 0; color: var(--text-2); line-height: var(--leading-relaxed); }
+.notfound .btn { margin-top: var(--space-8); }
 
 /* ---------- Reveal on scroll ----------
    A subtle fade and rise as each block enters. Hidden only once site.js
@@ -920,7 +984,8 @@ main:focus { outline: none; }
 
 /* ---------- User preferences ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .btn:active, .nav-toggle:active { transform: none; }
+  .btn:active, .nav-toggle:active { transform: none; opacity: 0.8; }
+  .link-text, .header-cta { transition: none; }
   .reveal-ready .reveal { transform: none; transition: opacity 0.3s ease; }
   .js .site-nav, .js .nav-open .site-nav { transform: none; }
   .btn-arrow, .link-arrow .icon, .nav-link::after { transition: none; }
