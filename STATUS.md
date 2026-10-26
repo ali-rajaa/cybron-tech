@@ -85,6 +85,14 @@ white with a hairline. No navy bands.
   (vibrancy, not flat grey), a quiet fill on hover, and a soft edge once
   content scrolls under it; tracking by size (display -0.04em to captions
   +0.006em) and leading by size; optical sizing on.
+- **Type scale** (one size per role, tokens `--fs-*`): page heading 38
+  to 55px; section headings 30 to 44px (clearly under the page heading);
+  the contact email 22 to 30px; item titles 20px semibold (services,
+  steps, About points, office); intros 17 to 20px on one 36rem measure;
+  body 16px at 1.6; buttons and footer 15px; nav, labels and lists 14px;
+  fine print 13px. Weights: 700 headings, 600 titles and buttons, 500
+  emphasis, 400 text. Buttons: 40px (header), 44px, 50px (large, and
+  every phone "Get in touch").
 - **Spacing scale**: one 4px scale (`--space-1` 4px to `--space-10`
   64px) for every margin, padding and gap; title to text 8, heading to
   intro 20, list rows 24 to 32, blocks 48 to 64.
