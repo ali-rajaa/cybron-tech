@@ -18,6 +18,7 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 | Fact | Source |
 |---|---|
 | Company name "Cybron Technologies"; Facebook and LinkedIn pages | Owner, 18 Oct |
+| Founded in 2022 (`founded` in `_data/company.yml`; About and the schema's foundingDate) | Owner, 18 Oct |
 | Cybron is a registered trademark: footer reads "© year Cybron Technologies. All rights reserved. Cybron® is a registered trademark of Cybron Technologies." | Owner, 18 Oct |
 | Social links show the network's outline icon beside its name (footer, About, Contact) and open in a new tab | Owner, 18 Oct |
 | Email `info@cybrontech.com`; no phone number on the site; no contact form | Owner, 18 Oct |
@@ -103,6 +104,12 @@ white with a hairline. No navy bands.
   node on wide screens. Hover or focus turns the node, name and matching
   circuit trace blue. The line draws once on load; reduced motion skips
   it. On phones a vertical line with the names only.
+- **No recurring info** (owner, 18 Oct): each detail lives in one place
+  on the page. Office and email: Contact. Social links: footer. Open
+  roles: Careers. About says what sets us apart (founded 2022, our own
+  products, one team) and repeats nothing. The footer, as site-wide
+  reference, also carries the email and office. No boxes or shadows on
+  content: About, Careers and Contact use hairlines like Services.
 - **Contact**: one clear block, no form (owner, 18 Oct): the email set
   large, one primary "Email us" (mailto with a subject) and a "Copy
   address" ghost button (shown only where the clipboard works; result

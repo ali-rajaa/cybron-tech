@@ -571,6 +571,10 @@ main:focus { outline: none; }
 .bus-link path { fill: none; stroke: var(--trace); stroke-width: 1.5; stroke-linejoin: round; }
 
 .hero-visual { position: relative; width: 100%; max-width: 32rem; margin-inline: auto; aspect-ratio: 520 / 440; }
+/* On phones the circuit is decoration under the services: keep it small. */
+@media (max-width: 639.98px) {
+  .hero-visual { max-width: 15rem; }
+}
 .hero-circuit { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .hero-circuit .trace path { stroke: var(--trace); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--dur-hover) var(--ease-in-out); }
 .hero-circuit .trace-node circle { fill: var(--surface); stroke: var(--trace); stroke-width: 1.5; transition: stroke var(--dur-hover) var(--ease-in-out); }
@@ -637,15 +641,9 @@ main:focus { outline: none; }
 }
 .well .icon { width: 1.375rem; height: 1.375rem; }
 
-/* ---------- Services: an editorial list ----------
-   Heading on 4 columns (it stays in view while the list scrolls on wide
-   screens), the list on 8: one row per service on a hairline, the name
-   beside the description and its scope. */
-.services-layout { row-gap: 0; }
-@media (min-width: 1024px) {
-  .services-head { grid-column: 1 / span 4; align-self: start; position: sticky; top: calc(var(--header-h) + 2rem); margin-bottom: 0; }
-  .service-list { grid-column: 6 / span 7; }
-}
+/* ---------- Services: an editorial table ----------
+   The heading on top, then one row per service on a hairline: the name
+   on 4 columns, what it is on 4, what it covers on 4. Stacks on phones. */
 .service-row { padding-block: 2rem; border-top: 1px solid var(--line-strong); }
 .service-row:last-child { border-bottom: 1px solid var(--line-strong); }
 .service-title {
@@ -656,7 +654,7 @@ main:focus { outline: none; }
   font-weight: 650;
   letter-spacing: var(--track-headline);
 }
-.service-title .icon { width: 1.25rem; height: 1.25rem; color: var(--text-3); }
+.service-title .icon { flex: none; width: 1.25rem; height: 1.25rem; color: var(--text-3); }
 .service-body { margin-top: 0.75rem; }
 .service-text { max-width: 36rem; color: var(--text-2); line-height: var(--leading-relaxed); }
 /* What each service covers: a short list, one item a line, each marked
@@ -673,8 +671,13 @@ main:focus { outline: none; }
 .service-scope li { position: relative; padding-left: 1.125rem; }
 .service-scope li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 0.5rem; height: 1.5px; background: var(--line-strong); }
 @media (min-width: 768px) {
-  .service-row { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); column-gap: 2rem; align-items: baseline; }
-  .service-body { margin-top: 0; }
+  .service-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--grid-gap); align-items: baseline; }
+  .service-title { grid-column: 1 / span 4; }
+  .service-body { grid-column: 5 / span 8; margin-top: 0; }
+}
+@media (min-width: 1024px) {
+  .service-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--grid-gap); align-items: baseline; }
+  .service-scope { margin-top: 0; }
 }
 
 /* ---------- Approach: four steps on 3 columns each ----------
@@ -718,65 +721,23 @@ main:focus { outline: none; }
   .steps::before { display: block; left: 1.5rem; right: calc(25% - 1.5rem); top: 1.5rem; bottom: auto; width: auto; height: 1px; }
 }
 
-/* ---------- About: asymmetric, copy on 6, glance on 5 (with a gap
-   column between). ---------- */
+/* ---------- About ----------
+   The statement on 6 columns; beside it, on 5, what sets us apart as a
+   plain list on hairlines (no box, no shadow). */
 .about-grid { align-items: start; row-gap: 3rem; }
 @media (min-width: 1024px) {
   .about-copy { grid-column: 1 / span 6; }
-  .glance { grid-column: 8 / span 5; }
+  .facts { grid-column: 8 / span 5; }
 }
-.about-copy p { max-width: 38rem; margin-top: 1.25rem; color: var(--text-2); font-size: 1.0625rem; line-height: var(--leading-relaxed); }
-.about-copy .about-lead { margin-top: 1.75rem; color: var(--text); font-size: 1.1875rem; line-height: 1.6; }
-.glance {
-  padding: clamp(1.75rem, 4vw, 2.5rem);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: var(--shadow-md);
-}
-.glance-list { margin: 0; }
-.glance-list > div { padding-block: 1.125rem; border-top: 1px solid var(--line); }
-.glance-list > div:first-child { border-top: 0; padding-top: 0.25rem; }
-.glance-list dt { display: flex; align-items: center; gap: 0.5rem; color: var(--text-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--track-small); }
-.glance-list dt .icon { width: 1rem; height: 1rem; }
-.glance-list dd { margin-top: 0.375rem; font-size: 1.0625rem; font-weight: 500; line-height: 1.5; }
-/* Social links (About and Contact): the network's line icon and name.
-   Hover darkens the icon and draws the underline; nothing moves. */
-.social-links { display: flex; flex-wrap: wrap; gap: 0 1.5rem; }
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 2.75rem;
-  color: var(--text);
-  font-weight: 600;
-  text-decoration: none;
-}
-.social-link .icon { width: 1.125rem; height: 1.125rem; color: var(--text-3); transition: color var(--dur-hover) var(--ease-in-out); }
-.social-label {
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 0.2em;
-  transition: text-decoration-color var(--dur-hover) var(--ease-in-out);
-}
-@media (hover: hover) {
-  .social-link:hover .icon { color: var(--text); }
-  .social-link:hover .social-label { text-decoration-color: currentColor; }
-}
-
-/* ---------- Careers: a left-aligned panel ----------
-   Heading on 5 columns, the text and link on 6 beside it. */
-/* The panel carries its own padding, so the section around it takes
-   half, and the text lands where every other section's does. */
-.section.careers { padding-block: calc(var(--space-section) / 2); }
-.careers-panel {
-  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3.5rem);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--bg-alt);
-  align-items: center;
-}
+.about-copy .about-lead { max-width: 34rem; margin-top: 1.75rem; color: var(--text-2); font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); line-height: 1.55; text-wrap: pretty; }
+.facts { margin: 0; border-top: 1px solid var(--line-strong); }
+.facts > div { padding-block: 1.5rem; border-bottom: 1px solid var(--line-strong); }
+.facts dt { color: var(--text); font-size: 1.125rem; font-weight: 650; letter-spacing: var(--track-headline); }
+.facts dd { margin-top: 0.375rem; color: var(--text-2); line-height: var(--leading-relaxed); }
+/* ---------- Careers ----------
+   Laid out like every other section (no box): heading on 5 columns, the
+   text and link on 6 beside it. */
+.careers-grid { align-items: center; row-gap: 1.5rem; }
 @media (min-width: 1024px) {
   .careers-title { grid-column: 1 / span 5; }
   .careers-body { grid-column: 7 / span 6; }
@@ -785,7 +746,7 @@ main:focus { outline: none; }
   font-size: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: var(--track-display);
+  letter-spacing: var(--track-title);
 }
 .careers-sub { margin: 0; color: var(--text-2); font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem); line-height: var(--leading-relaxed); text-wrap: pretty; }
 .careers-actions { display: flex; margin-top: 2rem; }
@@ -794,8 +755,9 @@ main:focus { outline: none; }
 }
 
 /* ---------- Contact ----------
-   One clear way in: copy on 6 columns with the email set large, a quiet
-   details card on 5 (with a gap column between). */
+   The heading on 6 columns; on 5 beside it, the two things you need:
+   the email (the action, set large, with a copy button) and the office,
+   on hairlines like About (no box, no shadow). */
 .contact-grid { align-items: start; row-gap: 3rem; }
 @media (min-width: 1024px) {
   .contact-intro { grid-column: 1 / span 6; }
@@ -807,13 +769,19 @@ main:focus { outline: none; }
   line-height: 1.1;
   letter-spacing: var(--track-title);
 }
+.contact-details { margin: 0; border-top: 1px solid var(--line-strong); }
+.contact-details > div { padding-block: 1.5rem; border-bottom: 1px solid var(--line-strong); }
+.contact-details dt { display: flex; align-items: center; gap: 0.5rem; color: var(--text-3); font-size: 0.875rem; font-weight: 600; letter-spacing: var(--track-small); }
+.contact-details dt .icon { width: 1rem; height: 1rem; }
+.contact-details dd { margin-top: 0.5rem; color: var(--text); line-height: 1.6; }
+.contact-details dd + dd { margin-top: 0.75rem; }
+.contact-office { font-size: 1.125rem; font-weight: 500; }
 .contact-email {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  margin-top: 2.25rem;
   color: var(--text);
-  font-size: clamp(1.625rem, 1rem + 2.4vw, 2.5rem);
+  font-size: clamp(1.5rem, 1rem + 1.6vw, 2.125rem);
   font-weight: 650;
   line-height: 1.2;
   letter-spacing: var(--track-title-2);
@@ -824,25 +792,6 @@ main:focus { outline: none; }
 @media (hover: hover) {
   .contact-email:hover .link-text { background-image: linear-gradient(currentColor, currentColor); }
 }
-.contact-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
-@media (max-width: 479.98px) {
-  .contact-actions .btn { width: 100%; }
-}
-.contact-details {
-  margin: 0;
-  padding: clamp(1.75rem, 3vw, 2.25rem);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
-}
-.contact-details > div { padding-block: 1.25rem; border-top: 1px solid var(--line); }
-.contact-details > div:first-child { padding-top: 0; border-top: 0; }
-.contact-details > div:last-child { padding-bottom: 0; }
-.contact-details dt { display: flex; align-items: center; gap: 0.5rem; color: var(--text-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--track-small); }
-.contact-details dt .icon { width: 1rem; height: 1rem; }
-.contact-details dd { margin-top: 0.5rem; color: var(--text); font-size: 1rem; line-height: 1.6; }
-.contact-details dd + dd { margin-top: 0.125rem; }
 
 /* ---------- Footer ---------- */
 .site-footer { padding-top: clamp(4rem, 7vw, 5.5rem); border-top: 1px solid var(--line); background: var(--bg); color: var(--text); }

@@ -4,6 +4,7 @@
 # with a made-up value. Fill a value here and every place updates.
 
 name: "Cybron Technologies"
+founded: "2022"   # owner, 18 Oct
 short: "Cybron"
 
 # Office: the owner sent the full address (18 Oct) and asked for exactly
