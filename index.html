@@ -136,27 +136,17 @@ permalink: /
       <h2 id="approach-title">Four steps, every product</h2>
       <p class="section-sub">The same steps every time, so you always know where your product stands.</p>
     </div>
+    {%- comment -%} Numbered nodes on one line (the order matters, so it
+    shows), what we do, and what you get from each step. {%- endcomment %}
     <ol class="grid steps">
+      {%- for st in site.data.steps %}
       <li class="step reveal">
-        <span class="step-node" aria-hidden="true"><svg class="icon"><use href="#i-search"/></svg></span>
-        <h3 class="step-title">Understand</h3>
-        <p class="step-text">We start with what the product needs to do, who it is for and what a good result looks like.</p>
+        <span class="step-node" aria-hidden="true">{{ forloop.index }}</span>
+        <h3 class="step-title">{{ st.title | escape }}</h3>
+        <p class="step-text">{{ st.text | escape }}</p>
+        <p class="step-gives"><span class="step-gives-label">You get</span>{{ st.gives | escape }}</p>
       </li>
-      <li class="step reveal">
-        <span class="step-node" aria-hidden="true"><svg class="icon"><use href="#i-pen"/></svg></span>
-        <h3 class="step-title">Design</h3>
-        <p class="step-text">We shape the experience and the look before the build starts, so everyone can see where it is going.</p>
-      </li>
-      <li class="step reveal">
-        <span class="step-node" aria-hidden="true"><svg class="icon"><use href="#i-code"/></svg></span>
-        <h3 class="step-title">Build and test</h3>
-        <p class="step-text">We build in short steps and test as we go, so problems are found early, not at the end.</p>
-      </li>
-      <li class="step reveal">
-        <span class="step-node" aria-hidden="true"><svg class="icon"><use href="#i-rocket"/></svg></span>
-        <h3 class="step-title">Launch and improve</h3>
-        <p class="step-text">We publish, watch how it is used and keep making it better with updates.</p>
-      </li>
+      {%- endfor %}
     </ol>
   </div>
 </section>

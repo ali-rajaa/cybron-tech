@@ -1,0 +1,23 @@
+# "How we work": four steps, in order. Draft copy (owner to confirm):
+# general and true for the way any product team works; no durations,
+# prices or promises.
+#
+#   title   the step
+#   text    what we do
+#   gives   what you get from it (shown under "You get")
+
+- title: "Understand"
+  text: "We start with what the product needs to do, who it is for and what a good result looks like."
+  gives: "An agreed plan and scope"
+
+- title: "Design"
+  text: "We shape the experience and the look before the build starts, so everyone can see where it is going."
+  gives: "Designs to review and change before any code"
+
+- title: "Build and test"
+  text: "We build in short steps and test as we go, so problems are found early, not at the end."
+  gives: "Working builds to try as the product grows"
+
+- title: "Launch and improve"
+  text: "We publish, watch how it is used and keep making it better with updates."
+  gives: "Your product live, then regular updates"

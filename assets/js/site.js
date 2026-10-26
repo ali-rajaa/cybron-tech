@@ -77,26 +77,49 @@
   }
 
   /* ---- Copy the email address (Contact) ----
-     Hidden in the markup and shown only where the clipboard can be used,
-     so it never appears as a button that does nothing. The status line
-     announces the result to screen readers. */
-  document.querySelectorAll('[data-copy]').forEach(function (btn) {
-    if (!navigator.clipboard || !window.isSecureContext) return;
+     Hidden in the markup (so it never shows without JavaScript) and shown
+     once a copy method exists: the Clipboard API on https, otherwise a
+     selected text field and execCommand, which also works on plain http
+     (the preview). The status line announces the result to screen
+     readers, and the label confirms it on screen. */
+  var copyText = function (text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise(function (resolve, reject) {
+      var field = document.createElement('textarea');
+      field.value = text;
+      field.setAttribute('readonly', '');
+      field.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+      document.body.appendChild(field);
+      field.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(field);
+      if (ok) resolve(); else reject();
+    });
+  };
+  var canCopy = (navigator.clipboard && window.isSecureContext) ||
+    (document.queryCommandSupported && document.queryCommandSupported('copy'));
+  if (canCopy) document.querySelectorAll('[data-copy]').forEach(function (btn) {
     var label = btn.querySelector('.copy-text');
     var status = document.getElementById(btn.getAttribute('aria-describedby'));
     var timer;
     btn.hidden = false;
     btn.addEventListener('click', function () {
-      navigator.clipboard.writeText(btn.getAttribute('data-copy')).then(function () {
+      copyText(btn.getAttribute('data-copy')).then(function () {
         if (label) label.textContent = 'Copied';
         if (status) status.textContent = 'Email address copied.';
+        btn.classList.add('is-copied');
+      }, function () {
+        if (label) label.textContent = 'Copy failed';
+        if (status) status.textContent = 'Couldn\'t copy. Select the address above instead.';
+      }).then(function () {
+        btn.focus();
         clearTimeout(timer);
         timer = setTimeout(function () {
           if (label) label.textContent = 'Copy address';
           if (status) status.textContent = '';
+          btn.classList.remove('is-copied');
         }, 2500);
-      }, function () {
-        if (status) status.textContent = 'Couldn\'t copy. Select the address above instead.';
       });
     });
   });

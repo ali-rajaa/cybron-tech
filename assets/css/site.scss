@@ -193,6 +193,9 @@ main:focus { outline: none; }
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
+/* The hidden attribute always wins over component display rules (a
+   .btn is inline-flex), so a hidden control never shows. */
+[hidden] { display: none !important; }
 .visually-hidden {
   position: absolute !important;
   width: 1px;
@@ -680,12 +683,14 @@ main:focus { outline: none; }
   .service-scope { margin-top: 0; }
 }
 
-/* ---------- Approach: four steps on 3 columns each ----------
-   Joined by one hairline through their nodes. */
+/* ---------- Approach: four numbered steps ----------
+   Wide screens: one hairline through four numbered nodes, each step on
+   3 columns beneath it. Tablets: two by two. Phones: a vertical line
+   down the nodes. Each step ends with what you get, on a hairline. */
 .steps { position: relative; margin: 0; padding: 0; list-style: none; row-gap: 2.5rem; }
 @media (min-width: 768px) { .steps > * { grid-column: span 6; } }
 @media (min-width: 1024px) { .steps > * { grid-column: span 3; } }
-.step { position: relative; padding-left: 4.25rem; }
+.step { position: relative; display: flex; flex-direction: column; padding-left: 3.5rem; }
 .step-node {
   position: absolute;
   left: 0;
@@ -693,32 +698,59 @@ main:focus { outline: none; }
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 3rem;
-  height: 3rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   background: var(--surface);
+  box-shadow: 0 0 0 6px var(--bg);
   color: var(--text);
-  border: 1px solid var(--line-strong);
-  box-shadow: 0 0 0 8px var(--bg), var(--shadow-sm);
+  font-size: 0.9375rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
-.step-node .icon { width: 1.25rem; height: 1.25rem; }
-.steps::before {
+/* Phones: a line from each node down to the next one, ending at 4. */
+.step:not(:last-child)::before {
   content: "";
   position: absolute;
-  left: 1.5rem;
-  top: 1.5rem;
-  bottom: 1.5rem;
+  left: 1.125rem;
+  top: 2.25rem;
+  bottom: -2.5rem;
   width: 1px;
   background: var(--line-strong);
 }
-.step-title { padding-top: 0.625rem; font-size: 1.25rem; font-weight: 650; letter-spacing: var(--track-headline); }
-.step-text { margin-top: 0.625rem; color: var(--text-2); line-height: var(--leading-relaxed); }
-@media (min-width: 768px) {
-  .steps::before { display: none; }
+.step-title { padding-top: 0.25rem; font-size: 1.25rem; font-weight: 650; line-height: 1.3; letter-spacing: var(--track-headline); }
+.step-text { margin-top: 0.5rem; color: var(--text-2); line-height: var(--leading-relaxed); }
+.step-gives {
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.5;
 }
+.step-gives-label { color: var(--text-3); font-size: 0.8125rem; font-weight: 600; letter-spacing: var(--track-small); }
+@media (min-width: 768px) {
+  .step:not(:last-child)::before { display: none; }
+}
+/* Wide screens: one line through the four nodes, and the title, text
+   and "You get" of every step on shared rows, so each lines up across. */
 @media (min-width: 1024px) {
-  .step { padding-left: 0; padding-top: 4.75rem; }
-  .steps::before { display: block; left: 1.5rem; right: calc(25% - 1.5rem); top: 1.5rem; bottom: auto; width: auto; height: 1px; }
+  .steps { grid-template-rows: auto auto auto; row-gap: 0; }
+  .step { display: grid; grid-row: span 3; grid-template-rows: subgrid; align-content: start; padding-left: 0; padding-top: 3.5rem; }
+  .steps::before {
+    content: "";
+    position: absolute;
+    left: 1.125rem;
+    right: calc(25% - 1.125rem + var(--grid-gap) * 0.25);
+    top: 1.125rem;
+    height: 1px;
+    background: var(--line-strong);
+  }
 }
 
 /* ---------- About ----------
@@ -776,6 +808,7 @@ main:focus { outline: none; }
 .contact-details dd { margin-top: 0.5rem; color: var(--text); line-height: 1.6; }
 .contact-details dd + dd { margin-top: 0.75rem; }
 .contact-office { font-size: 1.125rem; font-weight: 500; }
+.contact-copy.is-copied { border-color: var(--accent); color: var(--accent); }
 .contact-email {
   display: inline-flex;
   align-items: center;

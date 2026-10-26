@@ -36,7 +36,7 @@ Sections: hero (`#top`), Services, How we work, About, Careers, Contact.
 
 **Draft copy for the owner to confirm** (general and true for the kind of
 work, but not confirmed by the owner): the three points and the hero line
-under each service (`_data/services.yml`), the four "How we work" steps, "We build
+under each service (`_data/services.yml`), the four "How we work" steps and what you get from each (`_data/steps.yml`), "We build
 products of our own as well as for others", and the Careers line.
 
 ## 3. Colours (contrast measured)
@@ -110,6 +110,12 @@ white with a hairline. No navy bands.
   products, one team) and repeats nothing. The footer, as site-wide
   reference, also carries the email and office. No boxes or shadows on
   content: About, Careers and Contact use hairlines like Services.
+- **How we work**: four numbered steps on one line (order shown, not
+  "Step 1" labels), what we do, and what you get from each on a hairline;
+  title, text and "You get" line up across the four (CSS subgrid).
+- **Copy address** works on https (Clipboard API) and on plain http, as
+  on the preview (a selected field and execCommand). `[hidden]` always
+  wins over `.btn`, so a control the script hides stays hidden.
 - **Contact**: one clear block, no form (owner, 18 Oct): the email set
   large, one primary "Email us" (mailto with a subject) and a "Copy
   address" ghost button (shown only where the clipboard works; result
